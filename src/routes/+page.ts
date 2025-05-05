@@ -10,6 +10,10 @@ export const load: PageLoad = ({}) => {
       {
         word: `now`,
         meaning: `지금`,
+      },
+      {
+        word: `potato`,
+        meaning: `감자`,
       }
     ]
   }

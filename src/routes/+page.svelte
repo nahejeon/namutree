@@ -5,12 +5,17 @@
 </script>
 
 <div class="flex flex-row">
+  <div class="card bg-base-100 card-border min-w-50 m-1">
+    <div class="card-body">
+      Add new
+    </div>
+  </div>
   {#each data.vocab_list as vocab}
     <div class="card bg-base-100 card-border min-w-50 m-1">
       <div class="card-body">
         <h2 class="card-title">{vocab.word}</h2>
         <p>{vocab.meaning}</p>
-        <p>hi</p>
+        <p>아무말</p>
       </div>
     </div>
 	{/each}
