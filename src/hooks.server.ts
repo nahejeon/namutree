@@ -29,7 +29,6 @@ const supabase: Handle = async ({ event, resolve }) => {
     if (!session) {
       return { session: null, user: null }
     }
-
     const {
       data: { user },
       error,
@@ -38,7 +37,6 @@ const supabase: Handle = async ({ event, resolve }) => {
       // JWT validation has failed
       return { session: null, user: null }
     }
-
     return { session, user }
   }
 
