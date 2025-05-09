@@ -17,12 +17,12 @@
         />
     </div>
   </div>
-  {#each data.vocab_list as vocab}
+  {#each data.items as item}
     <div class="card bg-base-100 card-border min-w-50 m-1">
       <div class="card-body">
-        <h2 class="card-title">{vocab.word}</h2>
-        <p>{vocab.meaning}</p>
-        <p>아무말</p>
+        <h2 class="card-title">{item.name}</h2>
+        <p>{item.meaning}</p>
+        <p>{item.notes}</p>
       </div>
     </div>
 	{/each}

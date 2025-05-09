@@ -1,20 +1,7 @@
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = ({}) => {
+export const load: PageLoad = ({ data }) => {
 	return {
-    vocab_list: [
-      {
-        word: `here`,
-        meaning: `여기`,
-      },
-      {
-        word: `now`,
-        meaning: `지금`,
-      },
-      {
-        word: `potato`,
-        meaning: `감자`,
-      }
-    ]
+    items: data.items
   }
 };

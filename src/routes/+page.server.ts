@@ -1,10 +1,17 @@
-import { fail, redirect } from '@sveltejs/kit'
+import { redirect } from '@sveltejs/kit'
 
 import type { Actions, PageServerLoad } from './$types'
 
 export const load: PageServerLoad = async ({ locals: { supabase } }) => {
-  const { data: colors } = await supabase.from('colors').select('name').limit(5).order('name')
-  return { colors: colors ?? [] }
+  const { data: { user } } = await supabase.auth.getUser()
+  const user_id = user?.id
+  
+  let { data: items } = await supabase
+    .from('items')
+    .select('*')
+    .eq('profile_id', user_id)
+
+  return { items: items ?? [] }
 }
 
 export const actions = {
