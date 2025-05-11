@@ -11,6 +11,8 @@ export const load: PageServerLoad = async ({ locals: { supabase } }) => {
     .select('*')
     .eq('profile_id', user_id)
 
+  items?.sort((a, b) => b.id - a.id);
+
   return { items: items ?? [] }
 }
 
