@@ -20,7 +20,7 @@
  { vocab }
 />
 
-<div class="flex flex-row">
+<div class="flex flex-row flex-wrap">
   <div class="card bg-base-100 card-border min-w-50 m-1">
     <div class="card-body">
       <button class="btn" onclick={() => (showModal = true)}>
