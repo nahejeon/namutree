@@ -44,5 +44,33 @@ export const actions = {
     } else {
       redirect(303, '/')
     } 
+	},
+
+  update: async ({ request, locals: { supabase } }) => {
+    const data = await request.formData();
+
+    const id = data.get('id')
+    const name = data.get('name')
+    const meaning = data.get('meaning')
+    const notes = data.get('notes')
+
+    const { error } = await supabase
+      .from('items')
+      .update([
+        { 
+          name: name,
+          meaning: meaning,
+          notes: notes
+        },
+      ])
+      .eq('id', id)
+      .select()
+
+    if (error) {
+      console.error(error)
+      redirect(303, '/')
+    } else {
+      redirect(303, '/')
+    } 
 	}
 } satisfies Actions;
