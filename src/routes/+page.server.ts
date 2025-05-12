@@ -19,12 +19,13 @@ export const load: PageServerLoad = async ({ locals: { supabase } }) => {
 export const actions = {
 	new: async ({ request, locals: { supabase } }) => {
     const data = await request.formData();
-    const name = data.get('name')
-    const meaning = data.get('meaning')
-    const notes = data.get('notes')
 
-    const { data: { user } } = await supabase.auth.getUser()
-    const user_id = user?.id
+    const name = data.get('name');
+    const meaning = data.get('meaning');
+    const notes = data.get('notes');
+
+    const { data: { user } } = await supabase.auth.getUser();
+    const user_id = user?.id;
 
     const { error } = await supabase
       .from('items')
@@ -36,23 +37,23 @@ export const actions = {
           notes: notes
         },
       ])
-      .select()
+      .select();
 
     if (error) {
-      console.error(error)
-      redirect(303, '/')
+      console.error(error);
+      redirect(303, '/');
     } else {
-      redirect(303, '/')
+      redirect(303, '/');
     } 
 	},
 
   update: async ({ request, locals: { supabase } }) => {
     const data = await request.formData();
 
-    const id = data.get('id')
-    const name = data.get('name')
-    const meaning = data.get('meaning')
-    const notes = data.get('notes')
+    const id = data.get('id');
+    const name = data.get('name');
+    const meaning = data.get('meaning');
+    const notes = data.get('notes');
 
     const { error } = await supabase
       .from('items')
@@ -64,13 +65,13 @@ export const actions = {
         },
       ])
       .eq('id', id)
-      .select()
+      .select();
 
     if (error) {
-      console.error(error)
-      redirect(303, '/')
+      console.error(error);
+      redirect(303, '/');
     } else {
-      redirect(303, '/')
+      redirect(303, '/');
     } 
-	}
+	},
 } satisfies Actions;

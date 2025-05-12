@@ -32,6 +32,20 @@
   {#each data.items as item}
     <div class="card bg-base-100 card-border min-w-50 m-1">
       <button
+        class="btn btn-circle"
+        aria-label="delete"
+        onclick={async () => {
+          await fetch(`/vocab/${item.id}`, {
+            method: 'DELETE'
+          });
+
+          const items = data.items.filter((i) => i.id !== item.id);
+
+          data = { ...data, items };
+        }}
+      ></button>
+      
+      <button
         class="vocab_card"
         onclick={() => {
           vocab = item;

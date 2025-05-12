@@ -13,7 +13,6 @@
   let existing = $derived(Boolean(vocab));
 
 	$effect(() => {
-    console.log(existing)
     if (showModal) {
       dialog.showModal();
     } else {
