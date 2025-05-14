@@ -21,19 +21,26 @@
 />
 
 <div class="flex flex-row flex-wrap">
-  <div class="card bg-base-100 card-border min-w-50 m-1">
-    <div class="card-body">
-      <button class="btn" onclick={() => (showModal = true)}>
-        open modal
-      </button>
+  <button
+    class="card card-dash border-dashed border-1 border-gray-400 min-w-50 m-1 relative cursor-grab"
+    onclick={() => (showModal = true)}
+  >
+    <div class="card-body justify-center items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-18 fill-none stroke-1 stroke-gray-300" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="24"/>
+        <line x1="20" y1="32" x2="44" y2="32"/>
+        <line x1="32" y1="20" x2="32" y2="44"/>
+      </svg>
+      <h3 class="text-base text-gray-600">Add vocab</h3>
     </div>
-  </div>
+  </button>
 
   {#each data.items as item}
-    <div class="card bg-base-100 card-border min-w-50 m-1">
+    <div class="card bg-base-100 card-border min-w-50 m-1 relative">
+      <!-- delete button -->
       <button
-        class="btn btn-circle"
         aria-label="delete"
+        class="btn btn-circle btn-ghost size-[1.8em] absolute top-1 right-1"
         onclick={async () => {
           await fetch(`/vocab/${item.id}`, {
             method: 'DELETE'
@@ -43,7 +50,9 @@
 
           data = { ...data, items };
         }}
-      ></button>
+      >
+        <img src="/delete_icon.svg" alt="delete">
+      </button>
       
       <button
         class="vocab_card"
