@@ -40,7 +40,7 @@
       <!-- delete button -->
       <button
         aria-label="delete"
-        class="btn btn-circle btn-ghost size-[1.8em] absolute top-1 right-1"
+        class="btn btn-circle btn-ghost size-[1.5em] absolute top-1 right-1"
         onclick={async () => {
           await fetch(`/vocab/${item.id}`, {
             method: 'DELETE'
@@ -51,7 +51,15 @@
           data = { ...data, items };
         }}
       >
-        <img src="/delete_icon.svg" alt="delete">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+        <defs>
+          <style>.cls-1{fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style>
+        </defs>
+        <g id="cross">
+          <line class="cls-1" x1="7" x2="25" y1="7" y2="25"/>
+          <line class="cls-1" x1="7" x2="25" y1="25" y2="7"/>
+        </g>
+      </svg>
       </button>
       
       <button
