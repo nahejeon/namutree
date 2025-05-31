@@ -47,20 +47,4 @@ const supabase: Handle = async ({ event, resolve }) => {
   })
 }
 
-const authGuard: Handle = async ({ event, resolve }) => {
-  const { session, user } = await event.locals.safeGetSession()
-  event.locals.session = session
-  event.locals.user = user
-
-  if (!event.locals.session && event.url.pathname.startsWith('/private')) {
-    redirect(303, '/auth')
-  }
-
-  if (event.locals.session && event.url.pathname === '/auth') {
-    redirect(303, '/private')
-  }
-
-  return resolve(event)
-}
-
-export const handle: Handle = sequence(supabase, authGuard)
+export const handle: Handle = sequence(supabase)

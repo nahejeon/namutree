@@ -56,7 +56,7 @@
       
       <!-- Log in & Sign up -->
       <div class="dropdown dropdown-end">
-        <button class="btn btn-ghost"><a href="/auth">Log in</a></button>
+        <button class="btn btn-ghost"><a href="/login">Log in</a></button>
         <button class="btn btn-accent"><a href="/signup">Sign up</a></button>
       </div>
 
