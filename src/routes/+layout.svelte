@@ -18,7 +18,6 @@
 <div class="drawer lg:drawer-open">
   <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
   <div class="drawer-content bg-base-200">
-
     <!-- Top bar -->
     <div class="navbar justify-between">
 
@@ -60,7 +59,7 @@
         <button class="btn btn-ghost"><a href="/auth">Log in</a></button>
         <button class="btn btn-accent"><a href="/signup">Sign up</a></button>
       </div>
-        
+
     </div>
 
     {@render children()}

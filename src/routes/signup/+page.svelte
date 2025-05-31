@@ -1,5 +1,5 @@
 <!-- Login form -->
-<div class="hero min-h-screen">
+<div class="hero h-[calc(100vh-64px)]">
   <div class="card bg-base-100 w-full max-w-sm shrink-0">
     <div class="card-body">
 
