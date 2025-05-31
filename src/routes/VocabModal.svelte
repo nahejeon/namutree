@@ -21,6 +21,13 @@
 	});
 </script>
 
+<style>
+  .modal {
+    backdrop-filter: blur(10px);
+    background-color: oklch(0% 0 0/ 0.1);
+  }
+</style>
+
 <dialog
   id="add-vocab"
   class="modal"
