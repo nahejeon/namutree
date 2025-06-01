@@ -33,8 +33,7 @@
         <input type="password" class="input mb-1.5" name="password" placeholder="Password" />
         <div><a class="link link-hover">Forgot password?</a></div>
 
-        <button class="btn btn-neutral mt-4 w-full">Continue</button>
-        <!-- <button class="btn btn-neutral mt-4" formaction="?/signup">Sign up</button> -->
+        <button class="btn btn-neutral mt-4 w-full" formaction="?/signup">Continue</button>
       </form>
     </div>
   </div>
