@@ -53,7 +53,7 @@
       >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
         <defs>
-          <style>.cls-1{fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style>
+          <style>.cls-1{fill:none;stroke:#cccccc;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style>
         </defs>
         <g id="cross">
           <line class="cls-1" x1="7" x2="25" y1="7" y2="25"/>
@@ -68,10 +68,12 @@
           vocab = item;
           showModal = true;
         }}>
-        <div class="card-body">
-          <h2 class="card-title">{item.name}</h2>
-          <p>{item.meaning}</p>
-          <p>{item.notes}</p>
+        <div class="card-body max-w-50 p-4">
+          <div class="line-clamp-2 mr-3">
+            <span class="font-semibold text-xl text-wrap mr-0.5">{item.name}</span>
+            <span class="text-gray-400">{item.meaning}</span>
+          </div>
+          <p class="font-serif text-sm line-clamp-4">{item.notes}</p>
         </div>
       </button>
     </div>
