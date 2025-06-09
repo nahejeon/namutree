@@ -1,10 +1,13 @@
-<script>
+<script lang="ts">
   import { invalidate } from '$app/navigation'
   import { onMount } from 'svelte'
   import "../app.css";
+  import FolderListItem from './FolderListItem.svelte';
 
   let { data, children } = $props();
-  let { session, supabase } = $derived(data);
+  let { folders, session, supabase } = $derived(data);
+
+  let addingFolder = $state(false);
 
   const logout = async () => {
     const { error } = await supabase.auth.signOut()
@@ -15,6 +18,8 @@
     } 
   }
 
+  const foldersDummy = [{name: "Russian"}, {name:"일본어"}, {name: "Arabic"}]
+
   onMount(() => {
     const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
       if (newSession?.expires_at !== session?.expires_at) {
@@ -24,6 +29,15 @@
     return () => data.subscription.unsubscribe();
   })
 </script>
+
+<style>
+  .btn-ghost:hover {
+    color: white;
+    background-color: transparent;
+    box-shadow: none;
+    outline: white;
+  }
+</style>
 
 <div class="drawer lg:drawer-open">
   <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
@@ -98,15 +112,41 @@
     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
     <div class="flex flex-col justify-between bg-primary text-base-100 min-h-full p-4">
       <div>
-        <div class="text-2xl font-semibold mb-2 text-accent">
+        <!-- Logo -->
+        <h1 class="text-2xl font-semibold mb-2 text-accent">
           <a href="/">NamuTree</a>
-        </div>
-        <div>
-          <ul class="menu w-50">
-            <li><a href="/">All</a></li>
-          </ul>
-        </div>
+        </h1>
+
+        <!-- Folder List -->
+        <ul class="menu w-50 text-base">
+          <li>
+            <h2 class="menu-title text-lg"><a href="/">All</a></h2>
+
+            <ul>
+
+              {#each foldersDummy as folder}
+                <FolderListItem folder={folder} addingNew={false}/>
+              {/each}
+
+              {#if addingFolder}
+                <FolderListItem addingNew bind:addingFolder />
+              {/if}
+
+            </ul>
+            
+          </li> 
+        </ul>
       </div>
+
+      <!-- New folder button -->
+      <button class="flex items-center gap-2 font-light text-base cursor-pointer" onclick={() => addingFolder = true}>
+        <svg xmlns="http://www.w3.org/2000/svg" class="fill-none stroke-3 stroke-white w-7" viewBox="0 0 64 64">
+          <circle cx="32" cy="32" r="24"/>
+          <line x1="20" y1="32" x2="44" y2="32"/>
+          <line x1="32" y1="20" x2="32" y2="44"/>
+        </svg>
+        New folder
+      </button>
     </div>
   </div>
 </div>
