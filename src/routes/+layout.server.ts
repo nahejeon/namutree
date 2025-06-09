@@ -1,4 +1,4 @@
-import type { LayoutServerLoad } from './$types'
+import type { Actions, LayoutServerLoad } from './$types'
 
 export const load: LayoutServerLoad = async ({ locals: { supabase, safeGetSession }, cookies }) => {
   const { session } = await safeGetSession();
@@ -10,8 +10,16 @@ export const load: LayoutServerLoad = async ({ locals: { supabase, safeGetSessio
     }
   }
 
+  const { data: { user } } = await supabase.auth.getUser();
+
+  let { data: folders } = await supabase
+    .from('folders')
+    .select('*')
+    .eq('profile_id', user?.id);
+
   return {
     session,
     cookies: cookies.getAll(),
+    folders: folders ?? [], 
   };
 }
