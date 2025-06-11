@@ -1,15 +1,24 @@
 <script lang="ts">
-	let { folder, addingNew, addingFolder = $bindable() } = $props();
+	let { folder, editing, addingFolder = $bindable() } = $props();
 	import MoreIcon from '$lib/icons/MoreIcon.svelte';
+	import { invalidate, invalidateAll } from '$app/navigation';
 
-	let editing = $state(addingNew);
+	let folderName = $state('');
 
 	let ref;
 
-	const addFolder = (e) => {
-		// Change this to submit form
-    if (e.key == 'Enter') {
-      console.log(e);
+	const addFolder = async (e) => {
+    if (e.key == 'Enter' && folderName) {
+    	await fetch('/api/folders', {
+				method: 'POST',
+				body: JSON.stringify({ name: folderName }),
+				headers: {
+					'content-type': 'application/json'
+				}
+			});
+
+			invalidate('folders:all');
+			addingFolder = false;
     }
   }
 
@@ -34,13 +43,24 @@
 
 	{#if editing}
 
-		<input bind:this={ref} id="edit" type="text" placeholder="Type here" class="input bg-primary" onkeydown={addFolder} onblur={() => addingFolder = false}/>
+		<input
+			bind:this={ref}
+			bind:value={folderName}
+
+			class="input bg-primary" 
+			id="edit"
+			type="text"
+			placeholder="Type here"
+			
+			onkeydown={addFolder}
+			onblur={() => addingFolder = false}
+		/>
 
 	{:else}
 
 		<div class="flex justify-between pr-1">
 
-			{folder.name}
+			{ folder?.name }
 
 			<div class="dropdown dropdown-end">
         <div tabindex="0" role="button" class="btn btn-more h-6 w-6 p-0">

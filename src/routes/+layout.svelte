@@ -23,8 +23,6 @@
     } 
   }
 
-  const foldersDummy = [{name: "Russian"}, {name:"일본어"}, {name: "Arabic"}]
-
   onMount(() => {
     const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
       if (newSession?.expires_at !== session?.expires_at) {
@@ -114,12 +112,12 @@
 
             <ul>
 
-              {#each foldersDummy as folder}
-                <FolderListItem folder={folder} addingNew={false}/>
+              {#each folders as folder}
+                <FolderListItem folder={folder} editing={false}/>
               {/each}
 
               {#if addingFolder}
-                <FolderListItem addingNew bind:addingFolder />
+                <FolderListItem editing bind:addingFolder />
               {/if}
 
             </ul>
