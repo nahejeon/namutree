@@ -22,6 +22,21 @@
     }
   }
 
+  const editFolder = async (e) => {
+    if (e.key == 'Enter' && folderName) {
+    	await fetch(`/api/folders/${folder.id}`, {
+				method: 'PUT',
+				body: JSON.stringify({ name: folderName }),
+				headers: {
+					'content-type': 'application/json'
+				}
+			});
+
+			invalidate('folders:all');
+			editing = false;
+    }
+  }
+
   const deleteFolder = async () => {
   	dropdown.style.display = "none";
 
@@ -62,8 +77,12 @@
 			type="text"
 			placeholder="Type here"
 			
-			onkeydown={addFolder}
-			onblur={() => addingFolder = false}
+			onkeydown={folder ? editFolder : addFolder}
+			onblur={() => {
+				folderName = '';
+				editing = false;
+				addingFolder = false;
+			}}
 		/>
 
 	{:else}
@@ -78,7 +97,7 @@
         </div>
         
         <ul class="menu dropdown-content bg-secondary rounded-box z-1 w-28 shadow-sm" bind:this={dropdown}>
-          <li><button onclick={''}>Rename</button></li>
+          <li><button onclick={() => editing = true}>Rename</button></li>
           <li><button onclick={deleteFolder}>Delete</button></li>
         </ul>
       </div>
