@@ -2,6 +2,9 @@
   import VocabModal from './VocabModal.svelte';
 	import type { PageProps } from './$types';
 
+  import AddVocabIcon from '$lib/icons/AddVocabIcon.svelte';
+  import DeleteIcon from '$lib/icons/DeleteIcon.svelte';
+
 	let { data }: PageProps = $props();
 
   let showModal = $state(false);
@@ -26,11 +29,7 @@
     onclick={() => (showModal = true)}
   >
     <div class="card-body justify-center items-center">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-18 fill-none stroke-1 stroke-gray-300" viewBox="0 0 64 64">
-        <circle cx="32" cy="32" r="24"/>
-        <line x1="20" y1="32" x2="44" y2="32"/>
-        <line x1="32" y1="20" x2="32" y2="44"/>
-      </svg>
+      <AddVocabIcon />
       <h3 class="text-base text-gray-600">Add vocab</h3>
     </div>
   </button>
@@ -51,15 +50,7 @@
           data = { ...data, items };
         }}
       >
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-        <defs>
-          <style>.cls-1{fill:none;stroke:#cccccc;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style>
-        </defs>
-        <g id="cross">
-          <line class="cls-1" x1="7" x2="25" y1="7" y2="25"/>
-          <line class="cls-1" x1="7" x2="25" y1="25" y2="7"/>
-        </g>
-      </svg>
+        <DeleteIcon />
       </button>
       
       <button
