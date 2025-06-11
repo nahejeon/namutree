@@ -5,7 +5,7 @@
 
 	let folderName = $state('');
 
-	let ref;
+	let ref, dropdown;
 
 	const addFolder = async (e) => {
     if (e.key == 'Enter' && folderName) {
@@ -20,6 +20,16 @@
 			invalidate('folders:all');
 			addingFolder = false;
     }
+  }
+
+  const deleteFolder = async () => {
+  	dropdown.style.display = "none";
+
+  	await fetch(`/api/folders/${folder.id}`, {
+      method: 'DELETE'
+    });
+
+		invalidate('folders:all');
   }
 
   $effect(() => {
@@ -67,9 +77,9 @@
           <MoreIcon />
         </div>
         
-        <ul class="menu dropdown-content bg-secondary rounded-box z-1 w-28 shadow-sm">
+        <ul class="menu dropdown-content bg-secondary rounded-box z-1 w-28 shadow-sm" bind:this={dropdown}>
           <li><button onclick={''}>Rename</button></li>
-          <li><button onclick={''}>Delete</button></li>
+          <li><button onclick={deleteFolder}>Delete</button></li>
         </ul>
       </div>
 

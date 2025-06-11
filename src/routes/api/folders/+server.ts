@@ -1,6 +1,4 @@
-import type { RequestHandler } from './$types';
-
-export const POST: RequestHandler = async ({ request, locals: { supabase } }) => {
+export async function POST({ request, locals: { supabase } }) {
 	const { name } = await request.json();
 
 	const { data: { user } } = await supabase.auth.getUser();
@@ -16,5 +14,5 @@ export const POST: RequestHandler = async ({ request, locals: { supabase } }) =>
   	console.error(error);
   }
 
-	return new Response(201);
+	return new Response( { status: 201 });
 };
