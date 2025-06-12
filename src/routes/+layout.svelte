@@ -4,6 +4,8 @@
   import "../app.css";
   import FolderListItem from './FolderListItem.svelte';
 
+  import logo from '$lib/assets/logo-color.png';
+
   import AddFolderIcon from '$lib/icons/AddFolderIcon.svelte';
   import SearchIcon from '$lib/icons/SearchIcon.svelte';
   import SettingsIcon from '$lib/icons/SettingsIcon.svelte';
@@ -101,9 +103,13 @@
     <div class="flex flex-col justify-between bg-primary text-base-100 min-h-full p-4">
       <div>
         <!-- Logo -->
-        <h1 class="text-2xl font-semibold mb-2 text-accent">
-          <a href="/">NamuTree</a>
-        </h1>
+        <a href="/" class="flex gap-2">
+          <img class="w-8 h-8" alt="The project logo" src={logo} />
+
+          <h1 class="text-2xl text-accent font-chilanka">
+            NAMUTREE
+          </h1>
+        </a>
 
         <!-- Folder List -->
         <ul class="menu w-50 text-base">
@@ -126,13 +132,18 @@
         </ul>
       </div>
 
-      <!-- New folder button -->
-      <button class="flex items-center gap-2 font-light text-base cursor-pointer" onclick={() => addingFolder = true}>
-        <AddFolderIcon />
-        New folder
-      </button>
+      <div>
+
+        <a href="https://www.flaticon.com/free-icons/eco-friendly" title="eco friendly icons" class="text-xs block font-chilanka text-primary-content/50 text-serif pt-1">Eco friendly icons created by <br/> Freepik - Flaticon</a>
+
+        <!-- New folder button -->
+        <button class="flex items-center gap-2 font-light text-base cursor-pointer" onclick={() => addingFolder = true}>
+          <AddFolderIcon />
+          New folder
+        </button>
+        
+      </div>
+
     </div>
   </div>
 </div>
-
-<!-- <a href="https://iconscout.com/icons/tree" class="text-underline font-size-sm" target="_blank">Tree</a> by <a href="https://iconscout.com/contributors/chamedesign" class="text-underline font-size-sm" target="_blank">Chamestudio</a> -->

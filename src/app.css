@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Chilanka&display=swap');
 @import "tailwindcss";
 @plugin "daisyui";
 @plugin "daisyui/theme" {
@@ -6,4 +7,9 @@
   --color-primary: #50B498;
   --color-secondary: #468585;
   --color-accent: #DEF9C4;
+}
+
+.font-chilanka {
+  font-family: "Chilanka", cursive;
+  padding-top: calc(var(--spacing));
 }
