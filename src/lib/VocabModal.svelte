@@ -59,14 +59,13 @@
       <p class="label text-base-content/40 italic mb-1">Example sentences, pronunciation, etc.</p>
       <textarea class="textarea w-full h-30" name="notes" placeholder="" bind:value={vocabNotes}></textarea>
 
-      <!-- Notes -->
-
+      <!-- Folder -->
       <legend class="fieldset-legend text-sm">Folder</legend>
 
       <div class="flex gap-3">
         <FolderIcon/>
         <select class="select w-70" name="folder_id">
-          <option selected={!folderId}>All</option>
+          <option selected={!folderId} label="All" />
           {#each folders as folder}
             <option selected={folderId == folder.id} label={folder.name}>{folder.id}</option>
           {/each}

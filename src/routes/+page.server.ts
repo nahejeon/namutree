@@ -35,7 +35,7 @@ export const actions = {
           name: name,
           meaning: meaning,
           notes: notes,
-          folder_id: folderId
+          folder_id: folderId || null
         },
       ])
       .select();
@@ -64,7 +64,7 @@ export const actions = {
           name: name,
           meaning: meaning,
           notes: notes,
-          folder_id: folderId
+          folder_id: folderId || null
         },
       ])
       .eq('id', id)
