@@ -89,7 +89,9 @@
 
 		<div class="flex justify-between pr-1">
 
-			{ folder?.name }
+			<a href="/folder/{folder.id}">
+				{ folder?.name }
+			</a>
 
 			<div class="dropdown dropdown-end">
         <div tabindex="0" role="button" class="btn btn-more h-6 w-6 p-0">
