@@ -5,7 +5,7 @@
   import AddVocabIcon from '$lib/icons/AddVocabIcon.svelte';
   import DeleteIcon from '$lib/icons/DeleteIcon.svelte';
 
-	let { data }: PageProps = $props();
+  let { data }: PageProps = $props();
 
   let showModal = $state(false);
   let vocab = $state(null);
@@ -20,10 +20,12 @@
 
 <VocabModal
   bind:showModal
- { vocab }
+  { vocab }
+  folders={data.folders}
 />
 
 <div class="flex flex-row flex-wrap">
+  <!-- Add vocab -->
   <button
     class="card card-dash border-dashed border-1 border-gray-400 min-w-50 m-1 relative cursor-grab"
     onclick={() => (showModal = true)}
@@ -35,6 +37,7 @@
   </button>
 
   {#each data.items as item}
+    <!-- Vocab card -->
     <div class="card bg-base-100 card-border min-w-50 m-1 relative">
       <!-- delete button -->
       <button

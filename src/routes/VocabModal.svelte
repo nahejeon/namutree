@@ -1,7 +1,10 @@
-<script>  
+<script>
+  import FolderIcon from '$lib/icons/FolderIcon.svelte';
+
 	let {
     showModal = $bindable(),
-    vocab
+    vocab,
+    folders
   } = $props();
 
 	let dialog = $state(); // HTMLDialogElement
@@ -9,6 +12,7 @@
   let vocabName = $derived(vocab?.name);
   let vocabMeaning = $derived(vocab?.meaning);
   let vocabNotes = $derived(vocab?.notes);
+  let folderId = $derived(vocab?.folder_id);
 
   let existing = $derived(Boolean(vocab));
 
@@ -35,7 +39,7 @@
   onclose={() => { showModal = false }}
 	onclick={(e) => { if (e.target === dialog) dialog.close(); }}
 >
-  <div class="modal-box max-w-100">
+  <div class="modal-box max-w-110">
     <form class="fieldset w-full" method="POST">
       <input type="hidden" name="id" value={vocab?.id}/>
 
@@ -54,6 +58,21 @@
       <legend class="fieldset-legend text-sm pb-0">Notes</legend>
       <p class="label text-base-content/40 italic mb-1">Example sentences, pronunciation, etc.</p>
       <textarea class="textarea w-full h-30" name="notes" placeholder="" bind:value={vocabNotes}></textarea>
+
+      <!-- Notes -->
+
+      <legend class="fieldset-legend text-sm">Folder</legend>
+
+      <div class="flex gap-3">
+        <FolderIcon/>
+        <select class="select w-70" name="folder_id">
+          <option selected={!folderId}>All</option>
+          {#each folders as folder}
+            <option selected={folderId == folder.id} label={folder.name}>{folder.id}</option>
+          {/each}
+        </select>
+      </div>
+      
 
       <!-- Buttons -->
       <div class="modal-action">

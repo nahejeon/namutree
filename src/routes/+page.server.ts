@@ -23,18 +23,19 @@ export const actions = {
     const name = data.get('name');
     const meaning = data.get('meaning');
     const notes = data.get('notes');
+    const folderId = data.get('folder_id');
 
     const { data: { user } } = await supabase.auth.getUser();
-    const user_id = user?.id;
 
     const { error } = await supabase
       .from('items')
       .insert([
         { 
-          profile_id: user_id,
+          profile_id: user?.id,
           name: name,
           meaning: meaning,
-          notes: notes
+          notes: notes,
+          folder_id: folderId
         },
       ])
       .select();
@@ -54,6 +55,7 @@ export const actions = {
     const name = data.get('name');
     const meaning = data.get('meaning');
     const notes = data.get('notes');
+    const folderId = data.get('folder_id');
 
     const { error } = await supabase
       .from('items')
@@ -61,7 +63,8 @@ export const actions = {
         { 
           name: name,
           meaning: meaning,
-          notes: notes
+          notes: notes,
+          folder_id: folderId
         },
       ])
       .eq('id', id)
