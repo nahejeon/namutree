@@ -54,7 +54,7 @@
       <div class="dropdown">
         <div tabindex="0" role="button" class="btn m-1 px-3 justify-between">
           <SortIcon />
-          <span>Sort by</span>
+          <span class="text-nowrap">Sort by</span>
         </div>
         
         <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
