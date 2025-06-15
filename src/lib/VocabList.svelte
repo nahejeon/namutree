@@ -11,6 +11,22 @@
   let vocab = $state(null);
 
   let pageCount = $derived(Math.floor((count + 1) / 20) + 1);
+
+  let searchString = $state('');
+  let sort = $state('descending');
+
+  const getParams = (i) => {
+    let url = '/';
+
+    if (currentFolderId) {
+      url += `folder/${currentFolderId}`;
+    }
+
+    const searchParams = new URLSearchParams({ page: i });
+    url += '?' + searchParams.toString();
+
+    return url;
+  }
 </script>
 
 <style>
@@ -84,24 +100,25 @@
   </div>
 
 
-
-  <!-- Pagination -->
-  <div class="join justify-center m-3">
-    {#if pageCount <= 5}
-      {#each Array.from({length: pageCount}, (_, i) => i + 1) as i}
-        {#if i == page}
-          <a href={"/?page=" + i}><button class="join-item btn btn-active">{i}</button></a>
-        {:else}
-          <a href={"/?page=" + i}><button class="join-item btn">{i}</button></a>
-        {/if}
-      {/each}
-    {:else}
-      <button class="join-item btn">1</button>
-      <button class="join-item btn">2</button>
-      <button class="join-item btn btn-disabled">...</button>
-      <button class="join-item btn">{pageCount - 1}</button>
-      <button class="join-item btn">{pageCount}</button>
-    {/if}
-  </div>
+  {#if pageCount > 1}
+    <!-- Pagination -->
+    <div class="join justify-center m-3">
+      {#if pageCount <= 5}
+        {#each Array.from({length: pageCount}, (_, i) => i + 1) as i}
+          {#if i == page}
+            <a href={getParams(i)}><button class="join-item btn btn-active">{i}</button></a>
+          {:else}
+            <a href={getParams(i)}><button class="join-item btn">{i}</button></a>
+          {/if}
+        {/each}
+      {:else}
+        <button class="join-item btn">1</button>
+        <button class="join-item btn">2</button>
+        <button class="join-item btn btn-disabled">...</button>
+        <button class="join-item btn">{pageCount - 1}</button>
+        <button class="join-item btn">{pageCount}</button>
+      {/if}
+    </div>
+  {/if}
 
 </div>
