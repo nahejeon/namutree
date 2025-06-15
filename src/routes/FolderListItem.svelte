@@ -1,7 +1,7 @@
 <script lang="ts">
 	let { folder, editing, addingFolder = $bindable() } = $props();
 	import MoreIcon from '$lib/icons/MoreIcon.svelte';
-	import { invalidate, invalidateAll } from '$app/navigation';
+	import { invalidate } from '$app/navigation';
 
 	let folderName = $state('');
 

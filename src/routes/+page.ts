@@ -1,7 +1,9 @@
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = ({ data }) => {
-	return {
-    items: data.items
-  };
+  const items = data.items;
+  const count = data.count;
+  const page = data.page;
+
+	return { items, count, page };
 };
