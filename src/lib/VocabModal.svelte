@@ -4,7 +4,8 @@
 	let {
     showModal = $bindable(),
     vocab,
-    folders
+    folders,
+    currentFolderId
   } = $props();
 
 	let dialog = $state(); // HTMLDialogElement
@@ -12,7 +13,7 @@
   let vocabName = $derived(vocab?.name);
   let vocabMeaning = $derived(vocab?.meaning);
   let vocabNotes = $derived(vocab?.notes);
-  let folderId = $derived(vocab?.folder_id);
+  let folderId = $derived(vocab?.folder_id || currentFolderId);
 
   let existing = $derived(Boolean(vocab));
 
@@ -67,7 +68,7 @@
         <select class="select w-70" name="folder_id">
           <option selected={!folderId} label="All" />
           {#each folders as folder}
-            <option selected={folderId == folder.id} label={folder.name}>{folder.id}</option>
+            <option selected={folder.id == folderId} label={folder.name}>{folder.id}</option>
           {/each}
         </select>
       </div>

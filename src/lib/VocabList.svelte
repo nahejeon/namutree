@@ -4,7 +4,7 @@
   import AddVocabIcon from '$lib/icons/AddVocabIcon.svelte';
   import DeleteIcon from '$lib/icons/DeleteIcon.svelte';
 
-  let { items, folders } = $props();
+  let { items, folders, currentFolderId } = $props();
 
   let showModal = $state(false);
   let vocab = $state(null);
@@ -21,6 +21,7 @@
   bind:showModal
   { vocab }
   { folders }
+  { currentFolderId }
 />
 
 <div class="flex flex-row flex-wrap">

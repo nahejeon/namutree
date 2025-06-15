@@ -14,5 +14,5 @@ export const load: PageServerLoad = async ({ locals: { supabase }, params: { fol
 
   items?.sort((a, b) => b.id - a.id);
 
-  return { items: items ?? [] };
+  return { items: items ?? [], folder_id };
 }
