@@ -100,7 +100,7 @@
 
   <div class="drawer-side">
     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
-    <div class="flex flex-col justify-between bg-primary text-base-100 min-h-full p-4">
+    <div class="flex flex-col justify-between bg-primary text-base-100 p-4 min-h-screen">
       <div>
         <!-- Logo -->
         <a href="/" class="flex gap-2">
@@ -112,7 +112,7 @@
         </a>
 
         <!-- Folder List -->
-        <ul class="menu w-50 text-base">
+        <ul class="menu w-50 text-base overflow-y-scroll h-[calc(100vh-150px)]">
           <li>
             <h2 class="menu-title text-lg"><a href="/">All</a></h2>
 

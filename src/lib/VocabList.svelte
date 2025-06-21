@@ -45,14 +45,14 @@
   { currentFolderId }
 />
 
-<div class="flex flex-col justify-between min-h-[calc(100vh-64px)]">
+<div class="flex flex-col justify-between h-[calc(100vh-64px)]">
 
-  <div class="flex flex-row flex-wrap">
+  <div class="flex flex-row flex-wrap overflow-y-scroll gap-0">
 
     {#if page == '1'}
       <!-- Add vocab -->
       <button
-        class="card card-dash border-dashed border-1 border-gray-400 min-w-50 m-1 relative cursor-grab"
+        class="card card-dash border-dashed border-1 border-gray-400 min-w-50 h-36 m-1 relative cursor-grab"
         onclick={() => showModal = true}
       >
         <div class="card-body justify-center items-center">
@@ -64,7 +64,7 @@
 
     {#each items as item}
       <!-- Vocab card -->
-      <div class="card bg-base-100 card-border min-w-50 m-1 relative">
+      <div class="card bg-base-100 card-border min-w-50 h-36 m-1 relative">
         <!-- delete button -->
         <button
           aria-label="delete"
@@ -91,7 +91,7 @@
               <span class="font-semibold text-xl text-wrap mr-0.5">{item.name}</span>
               <span class="text-gray-400">{item.meaning}</span>
             </div>
-            <p class="font-serif text-sm line-clamp-4">{item.notes}</p>
+            <p class="font-serif text-sm line-clamp-3">{item.notes}</p>
           </div>
         </button>
       </div>
@@ -100,10 +100,10 @@
   </div>
 
   <!-- Footer -->
-  <div class="grid grid-cols-3 mb-3"> 
+  <div class="grid grid-cols-3 m-3"> 
 
     <!-- View Toggle -->
-    <div class="flex items-center gap-2 justify-self-start ml-4">
+    <div class="flex items-center gap-2 justify-self-start">
       <input type="checkbox" checked={showEverything} class="toggle toggle-primary" />
       <p class="text-sm text-base-content/50">Show everything</p>
     </div>
