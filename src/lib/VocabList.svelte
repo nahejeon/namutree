@@ -15,6 +15,8 @@
   let searchString = $state('');
   let sort = $state('descending');
 
+  let showEverything = $state(true);
+
   const getParams = (i) => {
     let url = '/';
 
@@ -43,7 +45,7 @@
   { currentFolderId }
 />
 
-<div class="flex flex-col">
+<div class="flex flex-col justify-between min-h-[calc(100vh-64px)]">
 
   <div class="flex flex-row flex-wrap">
 
@@ -51,7 +53,7 @@
       <!-- Add vocab -->
       <button
         class="card card-dash border-dashed border-1 border-gray-400 min-w-50 m-1 relative cursor-grab"
-        onclick={() => (showModal = true)}
+        onclick={() => showModal = true}
       >
         <div class="card-body justify-center items-center">
           <AddVocabIcon />
@@ -59,8 +61,6 @@
         </div>
       </button>
     {/if}
-
-  
 
     {#each items as item}
       <!-- Vocab card -->
@@ -95,14 +95,21 @@
           </div>
         </button>
       </div>
-    {/each}
+    {/each}   
 
   </div>
 
+  <!-- Footer -->
+  <div class="grid grid-cols-3 mb-3"> 
 
-  {#if pageCount > 1}
+    <!-- View Toggle -->
+    <div class="flex items-center gap-2 justify-self-start ml-4">
+      <input type="checkbox" checked={showEverything} class="toggle toggle-primary" />
+      <p class="text-sm text-base-content/50">Show everything</p>
+    </div>
+
     <!-- Pagination -->
-    <div class="join justify-center m-3">
+    <div class="col-start-2 join justify-center justify-self-center">
       {#if pageCount <= 5}
         {#each Array.from({length: pageCount}, (_, i) => i + 1) as i}
           {#if i == page}
@@ -119,6 +126,8 @@
         <button class="join-item btn">{pageCount}</button>
       {/if}
     </div>
-  {/if}
 
+  </div>
+  <!-- End Footer -->
+  
 </div>
