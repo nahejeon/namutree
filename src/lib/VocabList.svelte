@@ -32,9 +32,19 @@
 </script>
 
 <style>
-  button.vocab_card {
+  button.vocab-card {
     all: unset;
     cursor: grab;
+
+    :hover {
+      .meaning {
+        color: gray;
+      }
+
+      .notes {
+        color: black;
+      }
+    }
   }
 </style>
 
@@ -64,7 +74,7 @@
 
     {#each items as item}
       <!-- Vocab card -->
-      <div class="card bg-base-100 card-border min-w-50 h-36 m-1 relative">
+      <div class="card bg-base-100 card-border w-50 h-36 m-1 relative">
         <!-- delete button -->
         <button
           aria-label="delete"
@@ -77,21 +87,30 @@
             items = items.filter((i) => i.id !== item.id);
           }}
         >
+          <!-- <input type="checkbox" checked="checked" class="checkbox checkbox-xs checked-neutral" /> -->
           <DeleteIcon />
         </button>
         
         <button
-          class="vocab_card"
+          class="vocab-card"
           onclick={() => {
             vocab = item;
             showModal = true;
           }}>
-          <div class="card-body max-w-50 p-4">
-            <div class="line-clamp-2 mr-3">
-              <span class="font-semibold text-xl text-wrap mr-0.5">{item.name}</span>
-              <span class="text-gray-400">{item.meaning}</span>
-            </div>
-            <p class="font-serif text-sm line-clamp-3">{item.notes}</p>
+          <div class="card-body w-50 p-4">
+            {#if showEverything}
+              <div class="line-clamp-2 mr-3">
+                <span class="font-semibold text-xl text-wrap mr-0.5">{item.name}</span>
+                <span class="text-gray-400">{item.meaning}</span>
+              </div>
+              <p class="font-serif text-sm line-clamp-3">{item.notes}</p>
+            {:else}
+              <div class="line-clamp-2 mr-3">
+                <span class="font-semibold text-xl text-wrap mr-0.5">{item.name}</span>
+                <span class="meaning text-white">{item.meaning}</span>
+              </div>
+              <p class="notes font-serif text-sm line-clamp-3 text-white">{item.notes}</p>
+            {/if}
           </div>
         </button>
       </div>
@@ -104,7 +123,7 @@
 
     <!-- View Toggle -->
     <div class="flex items-center gap-2 justify-self-start">
-      <input type="checkbox" checked={showEverything} class="toggle toggle-primary" />
+      <input type="checkbox" checked={showEverything} class="toggle toggle-primary" onclick={() => showEverything = !showEverything} />
       <p class="text-sm text-base-content/50">Show everything</p>
     </div>
 
