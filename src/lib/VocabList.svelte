@@ -35,15 +35,15 @@
   button.vocab-card {
     all: unset;
     cursor: grab;
+  }
 
-    :hover {
-      .meaning {
-        color: gray;
-      }
+  .card:hover {
+    .meaning {
+      color: gray;
+    }
 
-      .notes {
-        color: black;
-      }
+    .notes {
+      color: black;
     }
   }
 </style>
