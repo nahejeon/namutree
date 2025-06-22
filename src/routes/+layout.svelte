@@ -7,6 +7,7 @@
   import logo from '$lib/assets/logo-color.png';
 
   import AddFolderIcon from '$lib/icons/AddFolderIcon.svelte';
+  import OpenDrawerIcon from '$lib/icons/OpenDrawerIcon.svelte';
   import SearchIcon from '$lib/icons/SearchIcon.svelte';
   import SettingsIcon from '$lib/icons/SettingsIcon.svelte';
   import SortIcon from '$lib/icons/SortIcon.svelte';
@@ -50,6 +51,10 @@
     <!-- Top bar -->
     <div class="navbar justify-between">
 
+      <label for="my-drawer-2" class="lg:hidden cursor-pointer m-1 px-1">
+        <OpenDrawerIcon />
+      </label>
+
       <!-- Sort -->
       <div class="dropdown">
         <div tabindex="0" role="button" class="btn m-1 px-3 justify-between">
@@ -92,10 +97,6 @@
     </div>
 
     {@render children()}
-
-    <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">
-      Open drawer
-    </label>
   </div>
 
   <div class="drawer-side">
