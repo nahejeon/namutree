@@ -13,9 +13,11 @@
   import SortIcon from '$lib/icons/SortIcon.svelte';
 
   let { data, children } = $props();
-  let { folders, session, supabase } = $derived(data);
+  let { folders, folder_id, session, supabase } = $derived(data);
 
   let addingFolder = $state(false);
+
+  let searchString = $state('');
 
   const logout = async () => {
     const { error } = await supabase.auth.signOut()
@@ -34,6 +36,10 @@
     })
     return () => data.subscription.unsubscribe();
   })
+
+  $effect(() => {
+    console.log(folder_id);
+  });
 </script>
 
 <style>
@@ -70,10 +76,12 @@
       </div>
 
       <!-- Search -->
-      <label class="input w-200">
-        <SearchIcon />
-        <input type="search" required placeholder="Search" />
-      </label>
+      <form action={ folder_id ? "/folder/" + folder_id + "/search" : "/search" }>
+        <label class="input w-200">
+          <SearchIcon />
+          <input name="q" type="search" required placeholder="Search" bind:value={searchString}/>
+        </label>
+      </form>
 
       {#if !session?.user.is_anonymous}
         <!-- Greeting & Settings -->

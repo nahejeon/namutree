@@ -8,9 +8,9 @@ export const load: PageServerLoad = async ({ locals: { supabase }, url }) => {
 
   // Get count
   const { count, error } = await supabase
-  .from('items')
-  .select('*', { count: 'exact', head: true })
-  .eq('profile_id', user_id);
+    .from('items')
+    .select('*', { count: 'exact', head: true })
+    .eq('profile_id', user_id);
 
 
   // Pagination

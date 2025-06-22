@@ -12,7 +12,6 @@
 
   let pageCount = $derived(Math.floor((count + 1) / 20) + 1);
 
-  let searchString = $state('');
   let sort = $state('descending');
 
   let showEverything = $state(true);
@@ -57,7 +56,7 @@
 
 <div class="flex flex-col justify-between h-[calc(100vh-64px)]">
 
-  <div class="flex flex-row flex-wrap overflow-y-scroll gap-0">
+  <div class="flex flex-row flex-wrap overflow-y-scroll">
 
     {#if page == '1'}
       <!-- Add vocab -->

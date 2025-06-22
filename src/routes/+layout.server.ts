@@ -1,6 +1,6 @@
 import type { Actions, LayoutServerLoad } from './$types'
 
-export const load: LayoutServerLoad = async ({ locals: { supabase, safeGetSession }, cookies, depends }) => {
+export const load: LayoutServerLoad = async ({ locals: { supabase, safeGetSession }, cookies, depends, params }) => {
   depends('folders:all');
 
   const { session } = await safeGetSession();
@@ -22,6 +22,7 @@ export const load: LayoutServerLoad = async ({ locals: { supabase, safeGetSessio
   return {
     session,
     cookies: cookies.getAll(),
-    folders: folders ?? [], 
+    folders: folders ?? [],
+    folder_id: params.folder_id ?? ''
   };
 }
