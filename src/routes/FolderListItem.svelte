@@ -9,7 +9,7 @@
 
 	const addFolder = async (e) => {
     if (e.key == 'Enter' && folderName) {
-    	await fetch('/api/folders', {
+    	await fetch('/folder', {
 				method: 'POST',
 				body: JSON.stringify({ name: folderName }),
 				headers: {
@@ -24,7 +24,7 @@
 
   const editFolder = async (e) => {
     if (e.key == 'Enter' && folderName) {
-    	await fetch(`/api/folders/${folder.id}`, {
+    	await fetch(`/folder/${folder.id}`, {
 				method: 'PUT',
 				body: JSON.stringify({ name: folderName }),
 				headers: {
@@ -40,7 +40,7 @@
   const deleteFolder = async () => {
   	dropdown.style.display = "none";
 
-  	await fetch(`/api/folders/${folder.id}`, {
+  	await fetch(`/folder/${folder.id}`, {
       method: 'DELETE'
     });
 
