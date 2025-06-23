@@ -1,6 +1,6 @@
 import type { Actions, LayoutServerLoad } from './$types'
 
-export const load: LayoutServerLoad = async ({ locals: { supabase, safeGetSession }, cookies, depends, params }) => {
+export const load: LayoutServerLoad = async ({ locals: { supabase, safeGetSession }, cookies, depends, params, url }) => {
   depends('folders:all');
 
   const { session } = await safeGetSession();
@@ -19,10 +19,14 @@ export const load: LayoutServerLoad = async ({ locals: { supabase, safeGetSessio
     .select('*')
     .eq('profile_id', user?.id);
 
+  // Order
+  const sort = url.searchParams.get("sort") || "newest";
+
   return {
     session,
     cookies: cookies.getAll(),
     folders: folders ?? [],
-    folder_id: params.folder_id ?? ''
+    folder_id: params.folder_id ?? '',
+    sort
   };
 }

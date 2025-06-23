@@ -1,19 +1,23 @@
 <script lang="ts">
-  import { invalidate } from '$app/navigation'
-  import { onMount } from 'svelte'
+  import { page } from '$app/state';
+
+  import { invalidate } from '$app/navigation';
+  import { onMount } from 'svelte';
   import "../app.css";
   import FolderListItem from './FolderListItem.svelte';
 
   import logo from '$lib/assets/logo-color.png';
+  import { getURL }  from '$lib/getURL.ts';
 
   import AddFolderIcon from '$lib/icons/AddFolderIcon.svelte';
+  import CheckIcon from '$lib/icons/CheckIcon.svelte';
   import OpenDrawerIcon from '$lib/icons/OpenDrawerIcon.svelte';
   import SearchIcon from '$lib/icons/SearchIcon.svelte';
   import SettingsIcon from '$lib/icons/SettingsIcon.svelte';
   import SortIcon from '$lib/icons/SortIcon.svelte';
 
   let { data, children } = $props();
-  let { folders, folder_id, session, supabase } = $derived(data);
+  let { folders, folder_id, session, supabase, sort } = $derived(data);
 
   let addingFolder = $state(false);
 
@@ -36,10 +40,6 @@
     })
     return () => data.subscription.unsubscribe();
   })
-
-  $effect(() => {
-    console.log(folder_id);
-  });
 </script>
 
 <style>
@@ -50,6 +50,18 @@
     outline: white;
   }
 </style>
+
+
+{#snippet dropdown_item(text, name)}
+  <li>
+    <a href={getURL({folderId: folder_id, searchString, sort: name})}>
+      {text}
+      {#if sort == name}
+        <CheckIcon/>
+      {/if}
+    </a>
+  </li>
+{/snippet}
 
 <div class="drawer lg:drawer-open">
   <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
@@ -69,9 +81,9 @@
         </div>
         
         <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-          <li><a>Created: Newest first</a></li>
-          <li><a>Created: Oldest first</a></li>
-          <li><a>Name</a></li>
+          {@render dropdown_item('Created: Newest first', 'newest')}
+          {@render dropdown_item('Created: Oldest first', 'oldest')}
+          {@render dropdown_item('Name', 'name')}
         </ul>
       </div>
 

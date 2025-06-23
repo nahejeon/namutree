@@ -5,4 +5,4 @@
   let { data }: PageProps = $props();
 </script>
 
-<VocabList items={data.items} folders={data.folders} count={data.count} page={data.page} />
+<VocabList items={data.items} folders={data.folders} count={data.count} page={data.page} sort={data.sort} />

@@ -23,15 +23,21 @@ export const load: PageServerLoad = async ({ locals: { supabase }, params: { fol
   const start = page == '1' ? 0 : 20 * (page - 1) - 1;
   const end = page == '1' ? 18 : 20 * page - 2;
 
+  // Order
+  const sort = url.searchParams.get("sort") || "newest";
+  const sortColumn = ["newest", "oldest"].includes(sort) ? "id" : "name";
+  const ascending = sort == "newest" ? false : true;
+
+
   let { data: items } = await supabase
     .from('items')
     .select('*')
     .eq('profile_id', user_id)
     .eq('folder_id', folder_id)
     .ilike("all_text", `%${searchString}%`)  
-    .order('id', { ascending: false })
+    .order(sortColumn, { ascending })
     .range(start, end);
 
     
-  return { items, count, page, searchString };
+  return { items, count, page, searchString, sort };
 }

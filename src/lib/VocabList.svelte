@@ -5,14 +5,14 @@
   import AddVocabIcon from '$lib/icons/AddVocabIcon.svelte';
   import DeleteIcon from '$lib/icons/DeleteIcon.svelte';
 
-  let { items, folders, currentFolderId, count, page } = $props();
+  import { getURL }  from '$lib/getURL.ts';
+
+  let { items, folders, currentFolderId, count, page, sort } = $props();
 
   let showModal = $state(false);
   let vocab = $state(null);
 
   let pageCount = $derived(Math.floor((count + 1) / 20) + 1);
-
-  let sort = $state('descending');
 
   let showEverything = $state(true);
 
@@ -131,9 +131,9 @@
       {#if pageCount <= 5}
         {#each Array.from({length: pageCount}, (_, i) => i + 1) as i}
           {#if i == page}
-            <a href={getParams(i)}><button class="join-item btn btn-active">{i}</button></a>
+            <a href={getURL({ folderId: currentFolderId, sort, page: i })}><button class="join-item btn btn-active">{i}</button></a>
           {:else}
-            <a href={getParams(i)}><button class="join-item btn">{i}</button></a>
+            <a href={getURL({ folderId: currentFolderId, sort, page: i })}><button class="join-item btn">{i}</button></a>
           {/if}
         {/each}
       {:else}
