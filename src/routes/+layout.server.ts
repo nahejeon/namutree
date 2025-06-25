@@ -14,18 +14,12 @@ export const load: LayoutServerLoad = async ({ locals: { supabase, safeGetSessio
 
   const { data: { user } } = await supabase.auth.getUser();
 
-  let { data: folders } = await supabase
-    .from('folders')
-    .select('*')
-    .eq('profile_id', user?.id);
-
   // Order
   const sort = url.searchParams.get("sort") || "newest";
 
   return {
     session,
     cookies: cookies.getAll(),
-    folders: folders ?? [],
     folder_id: params.folder_id ?? '',
     sort
   };

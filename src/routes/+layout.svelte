@@ -17,7 +17,7 @@
   import SortIcon from '$lib/icons/SortIcon.svelte';
 
   let { data, children } = $props();
-  let { folders, folder_id, session, supabase, sort } = $derived(data);
+  let { folders, folder_id, session, supabase, sort, profileName } = $derived(data);
 
   let addingFolder = $state(false);
 
@@ -89,30 +89,42 @@
 
       <!-- Search -->
       <form action={ folder_id ? "/folder/" + folder_id + "/search" : "/search" }>
-        <label class="input w-200">
+        <label class="input w-150 lg:w-200">
           <SearchIcon />
           <input name="q" type="search" required placeholder="Search" bind:value={searchString}/>
         </label>
       </form>
 
       {#if !session?.user.is_anonymous}
+
         <!-- Greeting & Settings -->
-         <div class="dropdown dropdown-end">
-          <div tabindex="0" role="button" class="btn btn-ghost btn-circle m-1 px-1 justify-between">
-            <SettingsIcon />
+        <div class="flex items-center gap-2">
+          <div>Hi <span class="font-bold">{profileName}</span>!</div>
+
+           <div class="dropdown dropdown-end">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-circle m-1 px-1 justify-between">
+              <SettingsIcon />
+            </div>
+            
+            <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-32 p-2 shadow-sm">
+              <li><a href="/profile">Profile</a></li>
+              <li><button onclick={logout}>Logout</button></li>
+            </ul>
           </div>
-          
-          <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-32 p-2 shadow-sm">
-            <li><a href="/profile">Profile</a></li>
-            <li><button onclick={logout}>Logout</button></li>
-          </ul>
         </div>
+
       {:else}
+
         <!-- Log in & Sign up -->
         <div class="dropdown dropdown-end">
-          <button class="btn btn-ghost"><a href="/login">Log in</a></button>
-          <button class="btn btn-accent"><a href="/signup">Sign up</a></button>
+          <button class="btn btn-ghost">
+            <a href="/login">Log in</a>
+          </button>
+          <button class="btn btn-accent">
+            <a href="/signup">Sign up</a>
+          </button>
         </div>
+
       {/if}
     </div>
 

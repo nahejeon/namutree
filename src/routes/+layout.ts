@@ -37,5 +37,19 @@ export const load: LayoutLoad = async ({ data, depends, fetch }) => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  return { session, supabase, user, folders: data.folders, folder_id: data.folder_id, sort: data.sort };
+
+  let { data: folders } = await supabase
+    .from('folders')
+    .select('*')
+    .eq('profile_id', user?.id);
+
+  const { data: profiles, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', user?.id);
+
+  const profileName = profiles[0]?.nickname || profiles[0]?.first_name || '';
+
+
+  return { session, supabase, user, folders, profileName, folder_id: data.folder_id, sort: data.sort };
 }

@@ -1,71 +1,59 @@
 <script lang="ts">
-	let firstName = $state('');
-	let lastName = $state('');
+	import type { PageProps } from './$types';
 
-	let nickname = $state('');
+  let { data }: PageProps = $props();
+
+  let profile = $derived(data.profile[0]);
+
+	let firstName = $derived(profile?.first_name);
+	let lastName = $derived(profile?.last_name);
+
+	let nickname = $derived(profile?.nickname);
 </script>
 
-<div class="flex flex-col items-center content-center min-h-screen mt-15">
-	<div class="grid grid-cols-6 gap-3 w-130">
+<div class="flex flex-col items-center min-h-screen mt-15">
 
-		<div class="col-start-1 col-span-4">
-			<h1 class="text-3xl font-bold col-start-1">Edit Profile</h1>
-		</div>
+	<form class="fieldset grid grid-cols-6 gap-3 w-130" method="POST">
+		<h1 class="col-start-1 col-end-3 text-3xl font-bold">Edit Profile</h1>
 
 	  <div class="col-start-1 col-end-4">
-	  	<fieldset class="fieldset">
 			  <legend class="fieldset-legend">First name</legend>
-			  <input type="text" class="input" />
-			</fieldset>
+			  <input type="text" class="input" name="firstname" bind:value={firstName}/>
 	  </div>
 
 	  <div class="col-start-4 col-end-7">
-	  	<fieldset class="fieldset">
-			  <legend class="fieldset-legend">Last name</legend>
-			  <input type="text" class="input" />
-			</fieldset>
+		  <legend class="fieldset-legend">Last name</legend>
+		  <input type="text" class="input" name="lastname" bind:value={lastName} />
 	  </div>
 
 	  <div class="col-start-1 col-end-4">
-	  	<fieldset class="fieldset">
-			  <legend class="fieldset-legend">Nickname</legend>
-			  <input type="text" class="input" />
-			</fieldset>
+		  <legend class="fieldset-legend">Nickname</legend>
+		  <input type="text" class="input" name="nickname" bind:value={nickname} />
 	  </div>
 
 	  <div class="col-start-1 col-end-4">
-	  	<fieldset class="fieldset">
-			  <legend class="fieldset-legend">Email</legend>
-			  <input type="text" class="input" />
-			</fieldset>
+		  <legend class="fieldset-legend">Email</legend>
+		  <input type="text" class="input" />
 	  </div>
 
 	  <div class="col-start-1 col-end-4">
-	  	<fieldset class="fieldset">
-			  <legend class="fieldset-legend">Password</legend>
-			  <input type="text" class="input" />
-			</fieldset>
+		  <legend class="fieldset-legend">Password</legend>
+		  <input type="text" class="input" />
 	  </div>
 
 	  <div class="col-start-4 col-end-7">
-	  	<fieldset class="fieldset">
-			  <legend class="fieldset-legend">Confirm Password</legend>
-			  <input type="text" class="input" />
-			</fieldset>
+		  <legend class="fieldset-legend">Confirm Password</legend>
+		  <input type="text" class="input" />
 	  </div>
 
-	  <div class="col-start-1 col-end-7 ...">
-	  	
-	  </div>
-
-	  <div class="flex gap-1 col-end-6">
-		  <button class="btn hover:text-white w-20">
+	  <div class="flex gap-1 col-end-6 mt-3">
+		  <button formaction="?/cancel" class="btn hover:text-white w-20">
 	    	Cancel
 	    </button>
-	    <button class="btn btn-secondary text-white w-20">
+	    <button formaction="?/update" class="btn btn-secondary text-white w-20">
 	    	Save
 	    </button>
     </div>
+  </form>
 
-	</div>
 </div>
