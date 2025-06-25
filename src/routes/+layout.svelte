@@ -95,7 +95,7 @@
         </label>
       </form>
 
-      {#if !session?.user.is_anonymous}
+      {#if session}
 
         <!-- Greeting & Settings -->
         <div class="flex items-center gap-2">
