@@ -38,5 +38,5 @@ export const load: PageServerLoad = async ({ locals: { supabase }, url }) => {
     .range(start, end);
 
     
-  return { items, count, page, searchString, sort };
+  return { items, count, page, searchString, sort, searchString };
 }

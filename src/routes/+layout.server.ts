@@ -10,10 +10,13 @@ export const load: LayoutServerLoad = async ({ locals: { supabase, safeGetSessio
   // Order
   const sort = url.searchParams.get("sort") || "newest";
 
+  const searchString = url.searchParams.get("q");
+
   return {
     session,
     cookies: cookies.getAll(),
     folder_id: params.folder_id ?? '',
-    sort
+    sort,
+    searchString
   };
 }

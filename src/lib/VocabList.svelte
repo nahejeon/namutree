@@ -7,7 +7,7 @@
 
   import { getURL }  from '$lib/getURL.ts';
 
-  let { items, folders, currentFolderId, count, page, sort } = $props();
+  let { items, folders, currentFolderId, count, page, sort, searchString } = $props();
 
   let showModal = $state(false);
   let vocab = $state(null);
@@ -15,19 +15,6 @@
   let pageCount = $derived(Math.floor((count + 1) / 20) + 1);
 
   let showEverything = $state(true);
-
-  const getParams = (i) => {
-    let url = '/';
-
-    if (currentFolderId) {
-      url += `folder/${currentFolderId}`;
-    }
-
-    const searchParams = new URLSearchParams({ page: i });
-    url += '?' + searchParams.toString();
-
-    return url;
-  }
 </script>
 
 <style>

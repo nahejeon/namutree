@@ -17,11 +17,9 @@
   import SortIcon from '$lib/icons/SortIcon.svelte';
 
   let { data, children } = $props();
-  let { folders, folder_id, session, supabase, sort, profileName } = $derived(data);
+  let { folders, folder_id, session, supabase, sort, profileName, searchString } = $derived(data);
 
   let addingFolder = $state(false);
-
-  let searchString = $state('');
 
   const logout = async () => {
     const { error } = await supabase.auth.signOut()
