@@ -19,8 +19,8 @@ export const load: PageServerLoad = async ({ locals: { supabase }, url }) => {
   // Pagination
   const page = url.searchParams.get("page") || '1';
 
-  const start = page == '1' ? 0 : 20 * (page - 1) - 1;
-  const end = page == '1' ? 18 : 20 * page - 2;
+  const start = 20 * (page - 1);
+  const end = 20 * page - 1;
 
 
   // Order

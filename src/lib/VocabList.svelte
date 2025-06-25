@@ -42,66 +42,74 @@
 />
 
 <div class="flex flex-col justify-between h-[calc(100vh-64px)]">
-
   <div class="flex flex-row flex-wrap overflow-y-scroll">
 
-    {#if page == '1'}
-      <!-- Add vocab -->
-      <button
-        class="card card-dash border-dashed border-1 border-gray-400 min-w-50 h-36 m-1 relative cursor-grab"
-        onclick={() => showModal = true}
-      >
-        <div class="card-body justify-center items-center">
-          <AddVocabIcon />
-          <h3 class="text-base text-gray-600">Add vocab</h3>
-        </div>
-      </button>
-    {/if}
+    {#if searchString && items.length == 0}
 
-    {#each items as item}
-      <!-- Vocab card -->
-      <div class="card bg-base-100 card-border w-50 h-36 m-1 relative">
-        <!-- delete button -->
+      <p class="ml-5 mt-2 text-gray-400 italic">
+        No items found
+      </p>
+      
+    {:else}
+      
+      {#if page == '1' && !searchString}
+        <!-- Add vocab -->
         <button
-          aria-label="delete"
-          class="btn btn-circle btn-ghost size-[1.5em] absolute top-1 right-1"
-          onclick={async () => {
-            await fetch(`/vocab/${item.id}`, {
-              method: 'DELETE'
-            });
-
-            items = items.filter((i) => i.id !== item.id);
-          }}
+          class="card card-dash border-dashed border-1 border-gray-400 min-w-50 h-36 m-1 relative cursor-grab"
+          onclick={() => showModal = true}
         >
-          <!-- <input type="checkbox" checked="checked" class="checkbox checkbox-xs checked-neutral" /> -->
-          <DeleteIcon />
-        </button>
-        
-        <button
-          class="vocab-card"
-          onclick={() => {
-            vocab = item;
-            showModal = true;
-          }}>
-          <div class="card-body w-50 p-4">
-            {#if showEverything}
-              <div class="line-clamp-2 mr-3">
-                <span class="font-semibold text-xl text-wrap mr-0.5">{item.name}</span>
-                <span class="text-gray-400">{item.meaning}</span>
-              </div>
-              <p class="font-serif text-sm line-clamp-3">{item.notes}</p>
-            {:else}
-              <div class="line-clamp-2 mr-3">
-                <span class="font-semibold text-xl text-wrap mr-0.5">{item.name}</span>
-                <span class="meaning text-white">{item.meaning}</span>
-              </div>
-              <p class="notes font-serif text-sm line-clamp-3 text-white">{item.notes}</p>
-            {/if}
+          <div class="card-body justify-center items-center">
+            <AddVocabIcon />
+            <h3 class="text-base text-gray-600">Add vocab</h3>
           </div>
         </button>
-      </div>
-    {/each}   
+      {/if}
 
+      {#each items as item}
+        <!-- Vocab card -->
+        <div class="card bg-base-100 card-border w-50 h-36 m-1 relative">
+          <!-- delete button -->
+          <button
+            aria-label="delete"
+            class="btn btn-circle btn-ghost size-[1.5em] absolute top-1 right-1"
+            onclick={async () => {
+              await fetch(`/vocab/${item.id}`, {
+                method: 'DELETE'
+              });
+
+              items = items.filter((i) => i.id !== item.id);
+            }}
+          >
+            <!-- <input type="checkbox" checked="checked" class="checkbox checkbox-xs checked-neutral" /> -->
+            <DeleteIcon />
+          </button>
+          
+          <button
+            class="vocab-card"
+            onclick={() => {
+              vocab = item;
+              showModal = true;
+            }}>
+            <div class="card-body w-50 p-4">
+              {#if showEverything}
+                <div class="line-clamp-2 mr-3">
+                  <span class="font-semibold text-xl text-wrap mr-0.5">{item.name}</span>
+                  <span class="text-gray-400">{item.meaning}</span>
+                </div>
+                <p class="font-serif text-sm line-clamp-3">{item.notes}</p>
+              {:else}
+                <div class="line-clamp-2 mr-3">
+                  <span class="font-semibold text-xl text-wrap mr-0.5">{item.name}</span>
+                  <span class="meaning text-white">{item.meaning}</span>
+                </div>
+                <p class="notes font-serif text-sm line-clamp-3 text-white">{item.notes}</p>
+              {/if}
+            </div>
+          </button>
+        </div>
+      {/each}   
+  
+    {/if}
   </div>
 
   <!-- Footer -->
