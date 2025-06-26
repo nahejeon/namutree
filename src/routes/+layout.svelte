@@ -88,7 +88,7 @@
 
       <!-- Search -->
       <form action={ folder_id ? "/folder/" + folder_id + "/search" : "/search" }>
-        <label class="input w-150 lg:w-200">
+        <label class="input md:w-100 xl:w-180">
           <SearchIcon />
           <input name="q" type="search" required placeholder="Search" bind:value={searchString}/>
         </label>
@@ -97,10 +97,10 @@
       {#if session}
 
         <!-- Greeting & Settings -->
-        <div class="flex items-center gap-2">
-          <div>Hi <span class="font-bold">{profileName}</span>!</div>
+        <div class="flex items-center gap-2 ml-2">
+          <div class="hidden md:block">Hi <span class="font-bold">{profileName}</span>!</div>
 
-           <div class="dropdown dropdown-end">
+          <div class="dropdown dropdown-end">
             <div tabindex="0" role="button" class="btn btn-ghost btn-circle m-1 px-1 justify-between">
               <SettingsIcon />
             </div>
