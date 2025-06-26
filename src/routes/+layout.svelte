@@ -82,6 +82,7 @@
           {@render dropdown_item('Created: Newest first', 'newest')}
           {@render dropdown_item('Created: Oldest first', 'oldest')}
           {@render dropdown_item('Name', 'name')}
+          <!-- {@render dropdown_item('Random 🔥', 'random')} -->
         </ul>
       </div>
 
