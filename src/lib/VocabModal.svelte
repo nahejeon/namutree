@@ -1,5 +1,6 @@
 <script>
   import FolderIcon from '$lib/icons/FolderIcon.svelte';
+  import DeleteIcon from '$lib/icons/DeleteIcon.svelte';
 
 	let {
     showModal = $bindable(),
@@ -76,7 +77,7 @@
 
       <!-- Buttons -->
       <div class="modal-action">
-        <button class="btn btn-primary text-white w-20" formaction={ existing ? "?/update" : "?/new" } disabled={!(vocabName)}>Save</button>
+        <button class="btn btn-primary text-white shadow-none w-20" formaction={ existing ? "?/update" : "?/new" } disabled={!(vocabName)}>Save</button>
         <button class="btn btn-primary btn-soft w-20" formmethod="dialog">Close</button>
       </div>
     </form>

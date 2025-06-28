@@ -3,7 +3,7 @@
   import { userState } from './state.svelte.js';
 
   import VocabModal from './VocabModal.svelte';
-  import { invalidate } from '$app/navigation';
+  import { invalidate, invalidateAll } from '$app/navigation';
 
   import AddVocabIcon from '$lib/icons/AddVocabIcon.svelte';
   import DeleteIcon from '$lib/icons/DeleteIcon.svelte';
@@ -35,12 +35,18 @@
 
     for (let i = 0; i < items.length; i++) {
       if (selectedItemIdsBit & (1 << i)) {
-        ids.push(items[i]);
+        ids.push(items[i].id);
       }
     }
 
     return ids;
   }
+
+  $effect(() => {
+    if (!userState.select) {
+      selectedItemIdsBit = 0;
+    }
+  });
 </script>
 
 <style>
@@ -124,27 +130,8 @@
         <div class="card  bg-base-100 card-border w-50 h-36 m-1 relative">
           {#if userState.select}
             <input type="checkbox" checked={selectedItemIdsBit & 1 << i} class="checkbox checkbox-xs checkbox-neutral absolute top-2 right-2" />
-            <input type="checkbox" class="checkbox checkbox-xs checkbox-neutral absolute top-2 right-2" />
           {/if}
-
-          <!-- delete button -->
-
-
-<!--           <button
-            aria-label="delete"
-            class="btn btn-circle btn-ghost size-[1.5em] absolute top-1 right-1"
-            onclick={async () => {
-              await fetch(`/vocab/${item.id}`, {
-                method: 'DELETE'
-              });
-
-              items = items.filter((i) => i.id !== item.id);
-            }}
-          >
-            
-            <DeleteIcon />
-          </button> -->
-
+          
           <button
             class="vocab-card"
             onclick={() => {
@@ -224,6 +211,42 @@
       {/if}
     </div>
 
+    {#if userState.select}
+      <div class="col-start-3 justify-self-end">
+
+        <div class="dropdown dropdown-top dropdown-end">
+          <div tabindex="0" role="button" class="btn btn-outline btn-primary hover:text-white shadow-none">
+            Move to
+          </div>
+          
+          <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm mb-2">
+            {#each folders as folder}
+              <li><a>{folder.name}</a></li>
+            {/each}
+          </ul>
+        </div>
+
+        <button
+          class="btn btn-neutral btn-outline hover:shadow-none"
+          onclick={async () => {
+            await fetch(`/vocab`, {
+              method: 'DELETE',
+              body: JSON.stringify({ ids: getSelectedItems() }),
+              headers: {
+                'content-type': 'application/json'
+              }
+            });
+
+            selectedItemIdsBit = 0;
+            invalidateAll();
+          }}
+        >
+          Delete
+        </button>
+      </div>
+    {/if}
+    
+    
   </div>
   <!-- End Footer -->
   

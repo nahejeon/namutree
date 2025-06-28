@@ -94,7 +94,9 @@
           </div>
           
           <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-            <li></li>
+            {@render dropdown_item('Created: Newest first', 'newest')}
+            {@render dropdown_item('Created: Oldest first', 'oldest')}
+            {@render dropdown_item('Name', 'name')}
           </ul>
         </div>
       </div>

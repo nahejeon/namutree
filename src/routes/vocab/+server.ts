@@ -1,11 +1,10 @@
-export async function DELETE({ params, locals: { supabase } }) {
-	const vocab_id = params.vocab_id;
-
+export async function DELETE({ request, locals: { supabase } }) {
+  const { ids } = await request.json();
+  
   const { error } = await supabase
     .from('items')
     .delete()
-    .eq('id', vocab_id)
-    .select();
+    .in('id', ids);
 
   if (error) {
     console.error(error);
