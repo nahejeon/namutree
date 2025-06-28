@@ -42,6 +42,33 @@
     return ids;
   }
 
+  const deleteItems = async () => {
+    await fetch(`/vocab`, {
+      method: 'DELETE',
+      body: JSON.stringify({ ids: getSelectedItems() }),
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
+
+    selectedItemIdsBit = 0;
+    invalidateAll();
+  }
+
+  const moveItems = async (folderId) => {
+    await fetch(`/vocab`, {
+      method: 'PUT',
+      body: JSON.stringify({ folder_id: folderId, ids: getSelectedItems() }),
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
+
+    selectedItemIdsBit = 0;
+    invalidateAll();
+  }
+
+
   $effect(() => {
     if (!userState.select) {
       selectedItemIdsBit = 0;
@@ -131,7 +158,7 @@
           {#if userState.select}
             <input type="checkbox" checked={selectedItemIdsBit & 1 << i} class="checkbox checkbox-xs checkbox-neutral absolute top-2 right-2" />
           {/if}
-          
+
           <button
             class="vocab-card"
             onclick={() => {
@@ -202,12 +229,6 @@
             <a href={getURL({ folderId: currentFolderId, sort, page: i })}><button class="join-item btn">{i}</button></a>
           {/if}
         {/each}
-      {:else}
-        <button class="join-item btn">1</button>
-        <button class="join-item btn">2</button>
-        <button class="join-item btn btn-disabled">...</button>
-        <button class="join-item btn">{pageCount - 1}</button>
-        <button class="join-item btn">{pageCount}</button>
       {/if}
     </div>
 
@@ -219,27 +240,16 @@
             Move to
           </div>
           
-          <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm mb-2">
+          <ul class="menu dropdown-content bg-base-300 rounded-box z-1 w-52 p-2 shadow-sm mb-2">
             {#each folders as folder}
-              <li><a>{folder.name}</a></li>
+              <li><a href="#" onclick={() => moveItems(folder.id)}>{folder.name}</a></li>
             {/each}
           </ul>
         </div>
 
         <button
           class="btn btn-neutral btn-outline hover:shadow-none"
-          onclick={async () => {
-            await fetch(`/vocab`, {
-              method: 'DELETE',
-              body: JSON.stringify({ ids: getSelectedItems() }),
-              headers: {
-                'content-type': 'application/json'
-              }
-            });
-
-            selectedItemIdsBit = 0;
-            invalidateAll();
-          }}
+          onclick={deleteItems}
         >
           Delete
         </button>
