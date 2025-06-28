@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { userState } from './state.svelte.js';
 
   import VocabModal from './VocabModal.svelte';
   import { invalidate } from '$app/navigation';
@@ -18,12 +19,27 @@
 
   let showEverything = $state(true);
 
-  const highlightSearch = (text) => {
-    return text.replaceAll(searchString, '<mark class="highlight">' + searchString + '</mark>');
+  let itemIds = items.map((i) => i.id);
+  let selectedItemIdsBit = $state(0);
+  
+  const highlightSearch = (text) => text.replaceAll(searchString, '<mark class="highlight">' + searchString + '</mark>');
+
+  const highlightHiddenSearch = (text) => text.replaceAll(searchString, '<mark class="highlight-hidden">' + searchString + '</mark>');
+
+  const selectItem = (i) => {
+    selectedItemIdsBit ^= 1 << i;
   }
 
-  const highlightHiddenSearch = (text) => {
-    return text.replaceAll(searchString, '<mark class="highlight-hidden">' + searchString + '</mark>');
+  const getSelectedItems = () => {
+    let ids = [];
+
+    for (let i = 0; i < items.length; i++) {
+      if (selectedItemIdsBit & (1 << i)) {
+        ids.push(items[i]);
+      }
+    }
+
+    return ids;
   }
 </script>
 
@@ -64,6 +80,12 @@
       color: white;
     }
   }
+
+  .card {
+    &:has(> :checked) {
+      outline: none;
+    }
+  }
 </style>
 
 <VocabModal
@@ -97,11 +119,18 @@
         </button>
       {/if}
 
-      {#each items as item}
+      {#each items as item, i}
         <!-- Vocab card -->
-        <div class="card bg-base-100 card-border w-50 h-36 m-1 relative">
+        <div class="card  bg-base-100 card-border w-50 h-36 m-1 relative">
+          {#if userState.select}
+            <input type="checkbox" checked={selectedItemIdsBit & 1 << i} class="checkbox checkbox-xs checkbox-neutral absolute top-2 right-2" />
+            <input type="checkbox" class="checkbox checkbox-xs checkbox-neutral absolute top-2 right-2" />
+          {/if}
+
           <!-- delete button -->
-          <button
+
+
+<!--           <button
             aria-label="delete"
             class="btn btn-circle btn-ghost size-[1.5em] absolute top-1 right-1"
             onclick={async () => {
@@ -112,15 +141,19 @@
               items = items.filter((i) => i.id !== item.id);
             }}
           >
-            <!-- <input type="checkbox" checked="checked" class="checkbox checkbox-xs checked-neutral" /> -->
+            
             <DeleteIcon />
-          </button>
+          </button> -->
 
           <button
             class="vocab-card"
             onclick={() => {
-              vocab = item;
-              showModal = true;
+              if (userState.select) {
+                selectItem(i);
+              } else {
+                vocab = item;
+                showModal = true;
+              }
             }}>
             <div class="card-body w-50 p-4">
               {#if showEverything && searchString}

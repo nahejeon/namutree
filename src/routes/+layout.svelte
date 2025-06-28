@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state';
+  import { userState } from '$lib/state.svelte.js';
 
   import { invalidate } from '$app/navigation';
   import { onMount } from 'svelte';
@@ -29,6 +30,9 @@
       location.reload();
     } 
   }
+
+  const selectedButton = "btn btn-soft m-1 px-3";
+  const selectedButtonSelected = "btn btn-neutral shadow-none m-1 px-3";
 
   onMount(() => {
     const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
@@ -71,19 +75,28 @@
         <OpenDrawerIcon />
       </label>
 
-      <!-- Sort -->
-      <div class="dropdown">
-        <div tabindex="0" role="button" class="btn m-1 px-3 justify-between">
-          <SortIcon />
-          <span class="text-nowrap">Sort by</span>
+      <div class="flex">
+        <!-- Select -->
+        <button
+          class={userState.select ? selectedButtonSelected : selectedButton}
+          onclick={() => {
+            userState.select = !userState.select;
+          }}
+        >
+          Select
+        </button>
+
+        <!-- Sort -->
+        <div class="dropdown">
+          <div tabindex="0" role="button" class="btn m-1 px-3 justify-between">
+            <SortIcon />
+            <span class="text-nowrap">Sort by</span>
+          </div>
+          
+          <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+            <li></li>
+          </ul>
         </div>
-        
-        <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-          {@render dropdown_item('Created: Newest first', 'newest')}
-          {@render dropdown_item('Created: Oldest first', 'oldest')}
-          {@render dropdown_item('Name', 'name')}
-          <!-- {@render dropdown_item('Random 🔥', 'random')} -->
-        </ul>
       </div>
 
       <!-- Search -->
