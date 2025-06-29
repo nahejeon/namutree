@@ -9,6 +9,8 @@
 	let lastName = $derived(profile?.last_name);
 
 	let nickname = $derived(profile?.nickname);
+
+	let email = $derived(data.email);
 </script>
 
 <div class="flex flex-col items-center min-h-screen mt-15">
@@ -17,8 +19,8 @@
 		<h1 class="col-start-1 col-end-3 text-3xl font-bold">Edit Profile</h1>
 
 	  <div class="col-start-1 col-end-4">
-			  <legend class="fieldset-legend">First name</legend>
-			  <input type="text" class="input" name="firstname" bind:value={firstName}/>
+		  <legend class="fieldset-legend">First name</legend>
+		  <input type="text" class="input" name="firstname" bind:value={firstName}/>
 	  </div>
 
 	  <div class="col-start-4 col-end-7">
@@ -31,22 +33,28 @@
 		  <input type="text" class="input" name="nickname" bind:value={nickname} />
 	  </div>
 
-	  <div class="col-start-1 col-end-4">
-		  <legend class="fieldset-legend">Email</legend>
-		  <input type="text" class="input" />
-	  </div>
+	  {#if email}
+		  <div class="col-start-1 col-end-7">
+			  <div class="divider" />
+			</div>
 
-	  <div class="col-start-1 col-end-4">
-		  <legend class="fieldset-legend">Password</legend>
-		  <input type="text" class="input" />
-	  </div>
+		  <div class="col-start-1 col-end-4">
+			  <legend class="fieldset-legend">Email</legend>
+			  <p class="text-base font-medium pt-1 pb-2">{email}</p>
+		  </div>
 
-	  <div class="col-start-4 col-end-7">
-		  <legend class="fieldset-legend">Confirm Password</legend>
-		  <input type="text" class="input" />
-	  </div>
+		  <div class="col-start-1 col-end-4">
+			  <legend class="fieldset-legend">Password</legend>
+			  <input type="text" class="input" />
+		  </div>
 
-	  <div class="flex gap-1 col-end-6 mt-3">
+		  <div class="col-start-4 col-end-7">
+			  <legend class="fieldset-legend">Confirm Password</legend>
+			  <input type="text" class="input" />
+		  </div>
+	  {/if}
+
+	  <div class="flex gap-1 col-start-1 col-end-6 mt-3">
 		  <button formaction="?/cancel" class="btn hover:text-white w-20">
 	    	Cancel
 	    </button>

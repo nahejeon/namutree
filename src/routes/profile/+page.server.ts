@@ -11,8 +11,11 @@ export const load: PageServerLoad = async ({ locals: { supabase }, url }) => {
     .select('*')
     .eq('id', user?.id);
 
+  console.log(user);
 
-  return { profile };
+  const email = user.app_metadata.provider == 'email' ? user.email : null;
+
+  return { profile, email };
 }
 
 export const actions = {

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { redirect } from '@sveltejs/kit'
+
   import { page } from '$app/state';
   import { userState } from '$lib/state.svelte.js';
 
@@ -27,7 +29,7 @@
     if (error) {
       console.error(error)
     } else {
-      location.reload();
+      location.replace("/");
     } 
   }
 
@@ -43,15 +45,6 @@
     return () => data.subscription.unsubscribe();
   })
 </script>
-
-<style>
-  .btn-ghost:hover {
-    color: white;
-    background-color: transparent;
-    box-shadow: none;
-    outline: white;
-  }
-</style>
 
 
 {#snippet dropdown_item(text, name)}
@@ -131,11 +124,11 @@
 
         <!-- Log in & Sign up -->
         <div class="dropdown dropdown-end">
-          <button class="btn btn-ghost">
-            <a href="/login">Log in</a>
+          <button class="btn btn-ghost text-black">
+            <a href="/auth">Log in</a>
           </button>
-          <button class="btn btn-accent">
-            <a href="/signup">Sign up</a>
+          <button class="btn btn-primary text-white shadow-none">
+            <a href="/auth">Sign up</a>
           </button>
         </div>
 
