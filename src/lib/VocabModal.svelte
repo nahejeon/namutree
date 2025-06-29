@@ -11,12 +11,13 @@
 
 	let dialog = $state(); // HTMLDialogElement
 
+  let existing = $derived(Boolean(vocab));
+
   let vocabName = $derived(vocab?.name);
   let vocabMeaning = $derived(vocab?.meaning);
   let vocabNotes = $derived(vocab?.notes);
   let folderId = $derived(vocab?.folder_id || currentFolderId);
-
-  let existing = $derived(Boolean(vocab));
+  let createdAt = $derived(existing ? new Date(vocab?.created_at) : '');
 
 	$effect(() => {
     if (showModal) {
@@ -74,11 +75,18 @@
         </select>
       </div>
       
+      <div class="flex justify-between">
+        
+        <!-- Buttons -->
+        <div class="modal-action">
+          <button class="btn btn-primary btn-soft w-20" formmethod="dialog">Close</button>
+          <button class="btn btn-primary text-white shadow-none w-20" formaction={ existing ? "?/update" : "?/new" } disabled={!(vocabName)}>Save</button>
+        </div>
 
-      <!-- Buttons -->
-      <div class="modal-action">
-        <button class="btn btn-primary text-white shadow-none w-20" formaction={ existing ? "?/update" : "?/new" } disabled={!(vocabName)}>Save</button>
-        <button class="btn btn-primary btn-soft w-20" formmethod="dialog">Close</button>
+        {#if createdAt}
+          <p class="text-base-content/30 text-[10px] italic content-end">{createdAt.toLocaleString()}</p>
+        {/if}
+
       </div>
     </form>
   </div>
