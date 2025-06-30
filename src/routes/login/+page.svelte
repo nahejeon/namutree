@@ -4,8 +4,6 @@
   let email = $derived(form?.email);
   let password = $derived(form?.password); 
 
-  let error = $state(form?.missing || form?.incorrect);
-
   let emailMissing = $derived(form?.missing && !email);
   let passwordMissing = $derived(form?.missing && !password);
 
@@ -34,15 +32,15 @@
         <label class="label mt-3 mb-2" for="password">Password</label>
         <input type="password" class={(passwordMissing || invalidCredentials) ? "input input-error w-full" : "input w-full"} name="password" placeholder="Password" bind:value={password} />
 
-        <div class="mt-2 underline text-gray-700"><a class="link link-hover">Forgot password?</a></div>
-
         {#if passwordMissing}
           <p class={errorStyle}>Password field is required</p>
         {/if}
         
         {#if invalidCredentials}
-          <p class={errorStyle}>Invalid credentials</p>
+          <p class={errorStyle}>Wrong password</p>
         {/if}
+
+        <div class="mt-2 underline text-gray-700"><a class="link link-hover">Forgot password?</a></div>
 
         <!-- Buttons -->
         <button class="btn btn-neutral mt-4 shadow-none w-full mt-6">Login</button>
