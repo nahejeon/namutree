@@ -1,39 +1,98 @@
-<!-- Login form -->
+<script lang="ts">
+  let { form }: PageProps = $props();
+
+  let email = $derived(form?.email);
+  let password = $derived(form?.password);
+  let confirmPassword = $derived(form?.password);
+
+  let emailMissing = $derived(form?.missing && !email);
+  let passwordMissing = $derived(form?.missing && !password);
+
+  let userExists = $derived(form?.exists);
+  let otherError = $derived(form?.otherError);
+
+  let errorStyle = "text-error text-xs italic mt-2";
+
+  let passwordValid = $derived(password && password.length >= 8 && containsNumber(password));
+
+  function containsNumber(str) {
+    return /\d/.test(str);
+  }
+</script>
+
 <div class="hero h-[calc(100vh-64px)]">
   <div class="card bg-base-100 w-full max-w-sm shrink-0">
-    <div class="card-body">
+    <div class="card-body gap-0">
 
-      <div class="flex flex-col gap-1">
-        <!-- Google -->
+      <h3 class="text-2xl font-bold mb-0">Join NamuTree</h3>
+      <h3 class="text-xl font-medium text-gray-300 mb-5">& Streamline your language learning</h3>
+
+<!--       <div class="flex flex-col gap-1">
         <button class="btn bg-white text-black border-[#e5e5e5]">
           <svg aria-label="Google logo" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path d="m0 0H512V512H0" fill="#fff"></path><path fill="#34a853" d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"></path><path fill="#4285f4" d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"></path><path fill="#fbbc02" d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"></path><path fill="#ea4335" d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"></path></g></svg>
           Continue with Google
         </button>
       
-        <!-- Apple -->
         <button class="btn bg-white text-black border-[#e5e5e5]">
           <svg aria-label="Apple logo" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1195 1195"><path fill="black" d="M1006.933 812.8c-32 153.6-115.2 211.2-147.2 249.6-32 25.6-121.6 25.6-153.6 6.4-38.4-25.6-134.4-25.6-166.4 0-44.8 32-115.2 19.2-128 12.8-256-179.2-352-716.8 12.8-774.4 64-12.8 134.4 32 134.4 32 51.2 25.6 70.4 12.8 115.2-6.4 96-44.8 243.2-44.8 313.6 76.8-147.2 96-153.6 294.4 19.2 403.2zM802.133 64c12.8 70.4-64 224-204.8 230.4-12.8-38.4 32-217.6 204.8-230.4z"></path></svg>
           Continue with Apple
         </button>
       
-        <!-- Microsoft -->
         <button class="btn bg-white text-black border-[#e5e5e5]">
           <svg aria-label="Microsoft logo" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M96 96H247V247H96" fill="#f24f23"></path><path d="M265 96V247H416V96" fill="#7eba03"></path><path d="M96 265H247V416H96" fill="#3ca4ef"></path><path d="M265 265H416V416H265" fill="#f9ba00"></path></svg>
           Continue with Microsoft
         </button>
       </div>
 
-      <div class="divider"></div>
+      <div class="divider"></div> -->
 
       <form method="POST" action="?/login">
-        <label class="label mb-1" for="email">Email</label>
-        <input type="email" class="input" name="email" placeholder="Email" />
+        <!-- Email -->
+        <label class="label mb-2" for="email">Email</label>
+        <input type="email" class={(emailMissing || userExists) ? "input input-error w-full" : "input w-full"} name="email" placeholder="Email" bind:value={email} />
 
-        <label class="label mt-3  mb-1" for="password">Password</label>
-        <input type="password" class="input mb-1.5" name="password" placeholder="Password" />
-        <div><a class="link link-hover">Forgot password?</a></div>
+        {#if userExists}
+          <p class={errorStyle}>User already exists. <a href="/login" class="underline">Login</a> instead.</p>
+        {/if}
 
-        <button class="btn btn-neutral mt-4 w-full" formaction="?/signup">Continue</button>
+        
+
+        <!-- Password -->
+        <label class="label mt-3 mb-2" for="password">Password</label>
+        <input type="password" class={(passwordMissing) ? "input input-error w-full" : "input w-full"} name="password" placeholder="Password" bind:value={password} />
+
+        <ul class="ml-3 mt-2 list-disc text-xs text-black/30 italic marker:text-black/40">
+
+          <li class={(password && password.length >= 8) ? "text-emerald-400 marker:text-emerald-400" : ""}>
+            Must contain at least 8 or more characters
+            <span class="ml-2 text-sm text-emerald-400" hidden={!(password && password.length >= 8)}>✓</span>
+          </li>
+          <li class={(password && containsNumber(password)) ? "text-emerald-400 marker:text-emerald-400" : ""}>
+            Must contain at least one number
+            <span class="ml-2 text-sm text-emerald-400" hidden={!(password && containsNumber(password))}>✓</span>
+          </li>
+
+        </ul>
+        
+
+        {#if passwordValid}
+          <!-- Confirm password -->
+          <label class="label mt-3 mb-2" for="password">Confirm password</label>
+          <input type="password" class={(passwordMissing) ? "input input-error w-full" : "input w-full"} name="confirm-password" placeholder="Password" bind:value={confirmPassword} />
+
+          <!-- Passwords don't match -->
+          {#if confirmPassword && password != confirmPassword}
+            <p class={errorStyle}>Passwords don't match</p>
+          {/if}
+        {/if}
+
+
+        {#if otherError}
+          <p class={errorStyle}>That didn't work. Try again?</p>
+        {/if}
+        
+
+        <button class="btn btn-success mt-4 w-full shadow-none mt-8" formaction="?/signup" disabled={!passwordValid || (password != confirmPassword)}>Continue</button>
       </form>
     </div>
   </div>

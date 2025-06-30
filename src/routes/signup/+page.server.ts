@@ -1,4 +1,4 @@
-import { redirect } from '@sveltejs/kit'
+import { fail, redirect } from '@sveltejs/kit'
 
 import type { Actions } from './$types'
 
@@ -11,9 +11,15 @@ export const actions: Actions = {
     const { error } = await supabase.auth.signUp({ email, password });
     if (error) {
       console.error(error);
-      redirect(303, '/login/error');
+
+      if (error.code == "user_already_exists") {
+        return fail(400, { email, password, exists: true});
+      } else {
+        return fail(400, { email, password, otherError: true });
+      }
+
     } else {
-      redirect(303, '/');
+      redirect(303, '/profile');
     }
   },
 }
