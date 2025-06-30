@@ -17,4 +17,21 @@ export const actions: Actions = {
       redirect(303, '/');
     }
   },
+
+  resetPassword: async ({ request, locals: { supabase } }) => {
+    const formData = await request.formData();
+    const email = formData.get('email') as string;
+
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: 'http://localhost:5173/profile/update-password',
+    })
+
+    if (error) {
+      console.error(error);
+      return fail(400, { email, resetFail: true });
+
+    } else {
+      return { resetSent: true };
+    }
+  },
 }

@@ -25,7 +25,7 @@
     <div class="card-body gap-0">
 
       <h3 class="text-2xl font-bold mb-0">Join NamuTree</h3>
-      <h3 class="text-xl font-medium text-gray-300 mb-5">& Streamline your language learning</h3>
+      <h4 class="text-xl font-medium text-gray-300 mb-5">& Streamline your language learning</h4>
 
 <!--       <div class="flex flex-col gap-1">
         <button class="btn bg-white text-black border-[#e5e5e5]">
@@ -92,7 +92,7 @@
         {/if}
         
 
-        <button class="btn btn-success mt-4 w-full shadow-none mt-8" formaction="?/signup" disabled={!passwordValid || (password != confirmPassword)}>Continue</button>
+        <button class="btn btn-success w-full shadow-none mt-8" formaction="?/signup" disabled={!passwordValid || (password != confirmPassword)}>Continue</button>
       </form>
     </div>
   </div>
