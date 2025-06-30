@@ -18,6 +18,20 @@
 	<form class="fieldset grid grid-cols-6 gap-3 w-130" method="POST">
 		<h1 class="col-start-1 col-end-3 text-3xl font-bold">Edit Profile</h1>
 
+	  {#if email}
+		  <div class="col-start-1 col-end-4">
+			  <legend class="fieldset-legend">Email</legend>
+			  <p class="text-base font-medium pt-1 pb-2">{email}</p>
+		  </div>
+
+		  <div class="col-start-4 col-end-7">
+			  <legend class="fieldset-legend">Password</legend>
+				  <a class="col-start-3 col-end-5 btn btn-link shadow-none" href="/profile/update-password">
+		  		Change password
+		  	</a>
+		  </div>
+	  {/if}
+
 	  <div class="col-start-1 col-end-4">
 		  <legend class="fieldset-legend">First name</legend>
 		  <input type="text" class="input" name="firstname" bind:value={firstName}/>
@@ -33,32 +47,11 @@
 		  <input type="text" class="input" name="nickname" bind:value={nickname} />
 	  </div>
 
-	  {#if email}
-		  <div class="col-start-1 col-end-7">
-			  <div class="divider" />
-			</div>
-
-		  <div class="col-start-1 col-end-4">
-			  <legend class="fieldset-legend">Email</legend>
-			  <p class="text-base font-medium pt-1 pb-2">{email}</p>
-		  </div>
-
-		  <div class="col-start-1 col-end-4">
-			  <legend class="fieldset-legend">Password</legend>
-			  <input type="text" class="input" />
-		  </div>
-
-		  <div class="col-start-4 col-end-7">
-			  <legend class="fieldset-legend">Confirm Password</legend>
-			  <input type="text" class="input" />
-		  </div>
-	  {/if}
-
-	  <div class="flex gap-1 col-start-1 col-end-6 mt-3">
+	  <div class="flex gap-1 col-start-1 mt-9">
 		  <button formaction="?/cancel" class="btn hover:text-white w-20">
 	    	Cancel
 	    </button>
-	    <button formaction="?/update" class="btn btn-secondary text-white w-20">
+	    <button formaction="?/update" class="btn btn-success w-20 shadow-none">
 	    	Save
 	    </button>
     </div>
