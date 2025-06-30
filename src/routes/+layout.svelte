@@ -125,10 +125,10 @@
         <!-- Log in & Sign up -->
         <div class="dropdown dropdown-end">
           <button class="btn btn-ghost text-black">
-            <a href="/auth">Log in</a>
+            <a href="/login">Log in</a>
           </button>
           <button class="btn btn-primary text-white shadow-none">
-            <a href="/auth">Sign up</a>
+            <a href="/signup">Sign up</a>
           </button>
         </div>
 
