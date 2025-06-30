@@ -156,7 +156,7 @@
         <!-- Vocab card -->
         <div class="card  bg-base-100 card-border w-50 h-36 m-1 relative">
           {#if userState.select}
-            <input type="checkbox" checked={selectedItemIdsBit & 1 << i} class="checkbox checkbox-xs checkbox-neutral absolute top-2 right-2" />
+            <input type="checkbox" checked={selectedItemIdsBit & 1 << i} class="checkbox checkbox-xs checkbox-success absolute top-2 right-2" />
           {/if}
 
           <button

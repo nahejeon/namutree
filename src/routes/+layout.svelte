@@ -34,7 +34,7 @@
   }
 
   const selectedButton = "btn btn-soft m-1 px-3";
-  const selectedButtonSelected = "btn btn-neutral shadow-none m-1 px-3";
+  const selectedButtonSelected = "btn btn-success shadow-none m-1 px-3";
 
   onMount(() => {
     const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
