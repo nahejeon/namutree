@@ -8,7 +8,17 @@ export const actions: Actions = {
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
 
-    const { error } = await supabase.auth.signUp({ email, password });
+    const { data: { user } } = await supabase.auth.getUser();
+
+    let error;
+
+    if (user?.is_anonymous) {
+      ({ error } = await supabase.auth.updateUser({ email, password }));
+
+    } else {
+      ({ error } = await supabase.auth.signUp({ email, password }));
+    }
+
     if (error) {
       console.error(error);
 

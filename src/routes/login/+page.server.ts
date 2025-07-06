@@ -23,7 +23,7 @@ export const actions: Actions = {
     const email = formData.get('email') as string;
 
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: 'http://localhost:5173/profile/update-password',
+      redirectTo: 'https://namutree.io/profile/update-password',
     })
 
     if (error) {

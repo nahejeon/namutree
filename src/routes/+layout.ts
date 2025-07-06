@@ -37,7 +37,6 @@ export const load: LayoutLoad = async ({ data, depends, fetch }) => {
     data: { user },
   } = await supabase.auth.getUser();
 
-
   if (user) {
     let { data: folders } = await supabase
       .from('folders')
@@ -51,9 +50,8 @@ export const load: LayoutLoad = async ({ data, depends, fetch }) => {
 
     const profileName = profiles[0]?.nickname || profiles[0]?.first_name || '';
 
-    return { session, supabase, user, folders: folders || [], profileName: profileName || '', folder_id: data.folder_id, sort: data.sort, searchString: data.searchString};
+    return { session, supabase, user, folders: folders || [], profileName: profileName || '', folder_id: data.folder_id, sort: data.sort, searchString: data.searchString };
   }
 
   return { session, supabase, user, folders: [], profileName: '', folder_id: data.folder_id, sort: data.sort };
-
 }

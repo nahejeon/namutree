@@ -20,7 +20,7 @@
   import SortIcon from '$lib/icons/SortIcon.svelte';
 
   let { data, children } = $props();
-  let { folders, folder_id, session, supabase, sort, profileName, searchString } = $derived(data);
+  let { folders, folder_id, session, supabase, sort, profileName, searchString, user } = $derived(data);
 
   let addingFolder = $state(false);
 
@@ -102,7 +102,7 @@
         </label>
       </form>
 
-      {#if session}
+      {#if session && !user?.is_anonymous}
 
         <!-- Greeting & Settings -->
         <div class="flex items-center gap-2 ml-2">
