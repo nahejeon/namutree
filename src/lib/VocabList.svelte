@@ -131,7 +131,7 @@
 
 <div class="flex flex-col justify-between h-[calc(100vh-64px)]">
 
-  <div>
+  <div class="overflow-y-scroll ">
     {#if alert}
       <div role="alert" class="alert alert-info alert-soft m-3">
         <InfoIcon />
@@ -139,7 +139,7 @@
       </div>
     {/if}
 
-    <div class="flex flex-row flex-wrap overflow-y-scroll ml-2 mr-2">
+    <div class="flex flex-row flex-wrap ml-2 mr-2">
 
       {#if searchString && items.length == 0}
 
