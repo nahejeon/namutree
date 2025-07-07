@@ -27,7 +27,7 @@ export function getURL({ folderId, searchString, sort, page }) {
 
   const paramsString = params.toString();
   if (paramsString) {
-    url += '?' + paramsString;
+    url += "?" + paramsString;
   }
 
   return url;

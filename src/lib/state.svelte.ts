@@ -1,3 +1,3 @@
 export const userState = $state({
-	select: false
+  select: false,
 });

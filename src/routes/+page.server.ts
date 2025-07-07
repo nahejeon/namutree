@@ -1,100 +1,101 @@
-import { redirect } from '@sveltejs/kit'
+import { redirect } from "@sveltejs/kit";
 
-import type { Actions, PageServerLoad } from './$types'
+import type { Actions, PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ locals: { supabase }, url }) => {
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   const user_id = user?.id;
 
   // Get count
   const { count, error } = await supabase
-    .from('items')
-    .select('*', { count: 'exact', head: true })
-    .eq('profile_id', user_id);
-
+    .from("items")
+    .select("*", { count: "exact", head: true })
+    .eq("profile_id", user_id);
 
   // Pagination
-  const page = url.searchParams.get("page") || '1';
+  const page = url.searchParams.get("page") || "1";
 
-  const start = page == '1' ? 0 : 20 * (page - 1) - 1;
-  const end = page == '1' ? 18 : 20 * page - 2;
+  const start = page == "1" ? 0 : 20 * (page - 1) - 1;
+  const end = page == "1" ? 18 : 20 * page - 2;
 
   // Order
   const sort = url.searchParams.get("sort") || "newest";
   const sortColumn = ["newest", "oldest"].includes(sort) ? "id" : "name";
   const ascending = sort == "newest" ? false : true;
 
-  
-  let { data: items } = await supabase
-    .from('items')
-    .select('*')
-    .eq('profile_id', user_id)
+  const { data: items } = await supabase
+    .from("items")
+    .select("*")
+    .eq("profile_id", user_id)
     .order(sortColumn, { ascending })
     .range(start, end);
 
-
   return { items: items ?? [], count, page, sort };
-}
+};
 
 export const actions = {
-	new: async ({ request, locals: { supabase } }) => {
+  new: async ({ request, locals: { supabase } }) => {
     const data = await request.formData();
 
-    const name = data.get('name');
-    const meaning = data.get('meaning');
-    const notes = data.get('notes');
-    const folderId = data.get('folder_id');
+    const name = data.get("name");
+    const meaning = data.get("meaning");
+    const notes = data.get("notes");
+    const folderId = data.get("folder_id");
 
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
     const { error } = await supabase
-      .from('items')
+      .from("items")
       .insert([
-        { 
+        {
           profile_id: user?.id,
           name: name,
           meaning: meaning,
           notes: notes,
-          folder_id: folderId || null
+          folder_id: folderId || null,
         },
       ])
       .select();
 
     if (error) {
       console.error(error);
-      redirect(303, '/');
+      redirect(303, "/");
     } else {
-      redirect(303, '/');
-    } 
-	},
+      redirect(303, "/");
+    }
+  },
 
   update: async ({ request, locals: { supabase } }) => {
     const data = await request.formData();
 
-    const id = data.get('id');
-    const name = data.get('name');
-    const meaning = data.get('meaning');
-    const notes = data.get('notes');
-    const folderId = data.get('folder_id');
+    const id = data.get("id");
+    const name = data.get("name");
+    const meaning = data.get("meaning");
+    const notes = data.get("notes");
+    const folderId = data.get("folder_id");
 
     const { error } = await supabase
-      .from('items')
+      .from("items")
       .update([
-        { 
+        {
           name: name,
           meaning: meaning,
           notes: notes,
-          folder_id: folderId || null
+          folder_id: folderId || null,
         },
       ])
-      .eq('id', id)
+      .eq("id", id)
       .select();
 
     if (error) {
       console.error(error);
-      redirect(303, '/');
+      redirect(303, "/");
     } else {
-      redirect(303, '/');
-    } 
-	},
+      redirect(303, "/");
+    }
+  },
 } satisfies Actions;

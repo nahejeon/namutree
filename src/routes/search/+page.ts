@@ -1,4 +1,4 @@
-import type { PageLoad } from './$types';
+import type { PageLoad } from "./$types";
 
 export const load: PageLoad = ({ data }) => {
   const items = data.items;
@@ -6,5 +6,5 @@ export const load: PageLoad = ({ data }) => {
   const page = data.page;
   const searchString = data.searchString;
 
-	return { items, count, page, searchString };
+  return { items, count, page, searchString };
 };

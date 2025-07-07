@@ -1,32 +1,41 @@
-import type { Actions, LayoutServerLoad } from './$types'
+import type { Actions, LayoutServerLoad } from "./$types";
 
-import { demoFolders, demoItems } from '$lib/demoData.ts';
+import { demoFolders, demoItems } from "$lib/demoData.ts";
 
-export const load: LayoutServerLoad = async ({ locals: { supabase, safeGetSession }, cookies, depends, params, url }) => {
-  depends('folders:all');
+export const load: LayoutServerLoad = async ({
+  locals: { supabase, safeGetSession },
+  cookies,
+  depends,
+  params,
+  url,
+}) => {
+  depends("folders:all");
 
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  if (!user && !cookies.get('visited')) {
-
-    const { data: { user }, userError } = await supabase.auth.signInAnonymously();
+  if (!user && !cookies.get("visited")) {
+    const {
+      data: { user },
+      userError,
+    } = await supabase.auth.signInAnonymously();
 
     const { data: folders, error } = await supabase
-      .from('folders')
+      .from("folders")
       .insert(demoFolders(user.id))
-      .select('*');
+      .select("*");
 
     const folderIds = folders.map((f) => f.id);
 
     const { data: items, itemsError } = await supabase
-      .from('items')
+      .from("items")
       .insert(demoItems(user.id, folderIds))
-      .select('*');
+      .select("*");
 
     location.reload();
-
-  } else if (user && !cookies.get('visited')) {
-    cookies.set('visited', 'true', {path: '/'});
+  } else if (user && !cookies.get("visited")) {
+    cookies.set("visited", "true", { path: "/" });
   }
 
   const { session } = await safeGetSession();
@@ -39,8 +48,8 @@ export const load: LayoutServerLoad = async ({ locals: { supabase, safeGetSessio
   return {
     session,
     cookies: cookies.getAll(),
-    folder_id: params.folder_id ?? '',
+    folder_id: params.folder_id ?? "",
     sort,
-    searchString
+    searchString,
   };
-}
+};

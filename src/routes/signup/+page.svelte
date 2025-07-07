@@ -13,7 +13,9 @@
 
   let errorStyle = "text-error text-xs italic mt-2";
 
-  let passwordValid = $derived(password && password.length >= 8 && containsNumber(password));
+  let passwordValid = $derived(
+    password && password.length >= 8 && containsNumber(password),
+  );
 
   function containsNumber(str) {
     return /\d/.test(str);
@@ -23,11 +25,12 @@
 <div class="hero h-[calc(100vh-64px)]">
   <div class="card bg-base-100 w-full max-w-sm shrink-0">
     <div class="card-body gap-0">
-
       <h3 class="text-2xl font-bold mb-0">Join NamuTree</h3>
-      <h4 class="text-xl font-medium text-gray-300 mb-5">& Streamline your language learning</h4>
+      <h4 class="text-xl font-medium text-gray-300 mb-5">
+        & Streamline your language learning
+      </h4>
 
-<!--       <div class="flex flex-col gap-1">
+      <!--       <div class="flex flex-col gap-1">
         <button class="btn bg-white text-black border-[#e5e5e5]">
           <svg aria-label="Google logo" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path d="m0 0H512V512H0" fill="#fff"></path><path fill="#34a853" d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"></path><path fill="#4285f4" d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"></path><path fill="#fbbc02" d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"></path><path fill="#ea4335" d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"></path></g></svg>
           Continue with Google
@@ -49,36 +52,71 @@
       <form method="POST" action="?/login">
         <!-- Email -->
         <label class="label mb-2" for="email">Email</label>
-        <input type="email" class={(emailMissing || userExists) ? "input input-error w-full" : "input w-full"} name="email" placeholder="Email" bind:value={email} />
+        <input
+          type="email"
+          class={emailMissing || userExists
+            ? "input input-error w-full"
+            : "input w-full"}
+          name="email"
+          placeholder="Email"
+          bind:value={email}
+        />
 
         {#if userExists}
-          <p class={errorStyle}>User already exists. <a href="/login" class="underline">Login</a> instead.</p>
+          <p class={errorStyle}>
+            User already exists. <a href="/login" class="underline">Login</a> instead.
+          </p>
         {/if}
-
-        
 
         <!-- Password -->
         <label class="label mt-3 mb-2" for="password">Password</label>
-        <input type="password" class={(passwordMissing) ? "input input-error w-full" : "input w-full"} name="password" placeholder="Password" bind:value={password} />
+        <input
+          type="password"
+          class={passwordMissing ? "input input-error w-full" : "input w-full"}
+          name="password"
+          placeholder="Password"
+          bind:value={password}
+        />
 
-        <ul class="ml-3 mt-2 list-disc text-xs text-black/30 italic marker:text-black/40">
-
-          <li class={(password && password.length >= 8) ? "text-emerald-400 marker:text-emerald-400" : ""}>
+        <ul
+          class="ml-3 mt-2 list-disc text-xs text-black/30 italic marker:text-black/40"
+        >
+          <li
+            class={password && password.length >= 8
+              ? "text-emerald-400 marker:text-emerald-400"
+              : ""}
+          >
             Must contain at least 8 or more characters
-            <span class="ml-2 text-sm text-emerald-400" hidden={!(password && password.length >= 8)}>✓</span>
+            <span
+              class="ml-2 text-sm text-emerald-400"
+              hidden={!(password && password.length >= 8)}>✓</span
+            >
           </li>
-          <li class={(password && containsNumber(password)) ? "text-emerald-400 marker:text-emerald-400" : ""}>
+          <li
+            class={password && containsNumber(password)
+              ? "text-emerald-400 marker:text-emerald-400"
+              : ""}
+          >
             Must contain at least one number
-            <span class="ml-2 text-sm text-emerald-400" hidden={!(password && containsNumber(password))}>✓</span>
+            <span
+              class="ml-2 text-sm text-emerald-400"
+              hidden={!(password && containsNumber(password))}>✓</span
+            >
           </li>
-
         </ul>
-        
 
         {#if passwordValid}
           <!-- Confirm password -->
           <label class="label mt-3 mb-2" for="password">Confirm password</label>
-          <input type="password" class={(passwordMissing) ? "input input-error w-full" : "input w-full"} name="confirm-password" placeholder="Password" bind:value={confirmPassword} />
+          <input
+            type="password"
+            class={passwordMissing
+              ? "input input-error w-full"
+              : "input w-full"}
+            name="confirm-password"
+            placeholder="Password"
+            bind:value={confirmPassword}
+          />
 
           <!-- Passwords don't match -->
           {#if confirmPassword && password != confirmPassword}
@@ -86,13 +124,16 @@
           {/if}
         {/if}
 
-
         {#if otherError}
           <p class={errorStyle}>That didn't work. Try again?</p>
         {/if}
-        
 
-        <button class="btn btn-success w-full shadow-none mt-8" formaction="?/signup" disabled={!passwordValid || (password != confirmPassword)}>Continue</button>
+        <button
+          class="btn btn-success w-full shadow-none mt-8"
+          formaction="?/signup"
+          disabled={!passwordValid || password != confirmPassword}
+          >Continue</button
+        >
       </form>
     </div>
   </div>
