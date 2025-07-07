@@ -7,10 +7,11 @@
 
   import AddVocabIcon from '$lib/icons/AddVocabIcon.svelte';
   import DeleteIcon from '$lib/icons/DeleteIcon.svelte';
+  import InfoIcon from '$lib/icons/InfoIcon.svelte';
 
   import { getURL }  from '$lib/getURL.ts';
 
-  let { items, folders, currentFolderId, count, page, sort, searchString } = $props();
+  let { items, folders, currentFolderId, count, page, sort, searchString, alert } = $props();
 
   let showModal = $state(false);
   let vocab = $state(null);
@@ -129,85 +130,95 @@
 />
 
 <div class="flex flex-col justify-between h-[calc(100vh-64px)]">
-  <div class="flex flex-row flex-wrap overflow-y-scroll ml-2 mr-2">
 
-    {#if searchString && items.length == 0}
+  <div>
+    {#if alert}
+      <div role="alert" class="alert alert-info alert-soft m-3">
+        <InfoIcon />
+        <span>We created some sample data for you to start with. Any changes will be lost if you don't <a class="underline font-bold" href="/signup">sign up</a>.</span>
+      </div>
+    {/if}
 
-      <p class="ml-5 mt-2 text-gray-400 italic">
-        No items found
-      </p>
-      
-    {:else}
-      
-      {#if page == '1' && !searchString}
-        <!-- Add vocab -->
-        <button
-          class="card card-dash border-dashed border-1 border-gray-400 min-w-50 h-36 m-1 relative cursor-grab"
-          onclick={() => showModal = true}
-        >
-          <div class="card-body justify-center items-center">
-            <AddVocabIcon />
-            <h3 class="text-base text-gray-600">Add vocab</h3>
-          </div>
-        </button>
-      {/if}
+    <div class="flex flex-row flex-wrap overflow-y-scroll ml-2 mr-2">
 
-      {#each items as item, i}
-        <!-- Vocab card -->
-        <div class="card  bg-base-100 card-border w-50 h-36 m-1 relative">
-          {#if userState.select}
-            <input type="checkbox" checked={selectedItemIdsBit & 1 << i} class="checkbox checkbox-xs checkbox-success absolute top-2 right-2" />
-          {/if}
+      {#if searchString && items.length == 0}
 
+        <p class="ml-5 mt-2 text-gray-400 italic">
+          No items found
+        </p>
+        
+      {:else}
+        
+        {#if page == '1' && !searchString}
+          <!-- Add vocab -->
           <button
-            class="vocab-card"
-            onclick={() => {
-              if (userState.select) {
-                selectItem(i);
-              } else {
-                vocab = item;
-                showModal = true;
-              }
-            }}>
-            <div class="card-body w-50 p-4">
-              {#if showEverything && searchString}
-                <div class="line-clamp-2 mr-3">
-                  <span class="text font-semibold text-xl text-wrap mr-0.5">
-                    {@html highlightSearch(item.name)}
-                  </span>
-                  <span class="text text-gray-400">{@html highlightSearch(item.meaning)}</span>
-                </div>
-                <p class="text font-serif text-sm line-clamp-3">{@html highlightSearch(item.notes )}</p>
-
-              {:else if showEverything}
-                <div class="line-clamp-2 mr-3">
-                  <span class="text font-semibold text-xl text-wrap mr-0.5">
-                    {item.name}
-                  </span>
-                  <span class="text text-gray-400">{item.meaning}</span>
-                </div>
-                <p class="text font-serif text-sm line-clamp-3">{item.notes}</p>
-
-              {:else if searchString}
-                <div class="line-clamp-2 mr-3">
-                  <span class="text font-semibold text-xl text-wrap mr-0.5">{@html highlightSearch(item.name)}</span>
-                  <span class="text meaning text-white">{@html highlightHiddenSearch(item.meaning)}</span>
-                </div>
-                <p class="text notes font-serif text-sm line-clamp-3 text-white">{@html highlightHiddenSearch(item.notes)}</p>
-
-              {:else}
-                <div class="line-clamp-2 mr-3">
-                  <span class="text font-semibold text-xl text-wrap mr-0.5">{item.name}</span>
-                  <span class="text meaning text-white">{item.meaning}</span>
-                </div>
-                <p class="text notes font-serif text-sm line-clamp-3 text-white">{item.notes}</p>
-              {/if}
+            class="card card-dash border-dashed border-1 border-gray-400 min-w-50 h-36 m-1 relative cursor-grab"
+            onclick={() => showModal = true}
+          >
+            <div class="card-body justify-center items-center">
+              <AddVocabIcon />
+              <h3 class="text-base text-gray-600">Add vocab</h3>
             </div>
           </button>
-        </div>
-      {/each}   
-  
-    {/if}
+        {/if}
+
+        {#each items as item, i}
+          <!-- Vocab card -->
+          <div class="card  bg-base-100 card-border w-50 h-36 m-1 relative">
+            {#if userState.select}
+              <input type="checkbox" checked={selectedItemIdsBit & 1 << i} class="checkbox checkbox-xs checkbox-success absolute top-2 right-2" />
+            {/if}
+
+            <button
+              class="vocab-card"
+              onclick={() => {
+                if (userState.select) {
+                  selectItem(i);
+                } else {
+                  vocab = item;
+                  showModal = true;
+                }
+              }}>
+              <div class="card-body w-50 p-4">
+                {#if showEverything && searchString}
+                  <div class="line-clamp-2 mr-3">
+                    <span class="text font-semibold text-xl text-wrap mr-0.5">
+                      {@html highlightSearch(item.name)}
+                    </span>
+                    <span class="text text-gray-400">{@html highlightSearch(item.meaning)}</span>
+                  </div>
+                  <p class="text font-serif text-sm line-clamp-3">{@html highlightSearch(item.notes )}</p>
+
+                {:else if showEverything}
+                  <div class="line-clamp-2 mr-3">
+                    <span class="text font-semibold text-xl text-wrap mr-0.5">
+                      {item.name}
+                    </span>
+                    <span class="text text-gray-400">{item.meaning}</span>
+                  </div>
+                  <p class="text font-serif text-sm line-clamp-3">{item.notes}</p>
+
+                {:else if searchString}
+                  <div class="line-clamp-2 mr-3">
+                    <span class="text font-semibold text-xl text-wrap mr-0.5">{@html highlightSearch(item.name)}</span>
+                    <span class="text meaning text-white">{@html highlightHiddenSearch(item.meaning)}</span>
+                  </div>
+                  <p class="text notes font-serif text-sm line-clamp-3 text-white">{@html highlightHiddenSearch(item.notes)}</p>
+
+                {:else}
+                  <div class="line-clamp-2 mr-3">
+                    <span class="text font-semibold text-xl text-wrap mr-0.5">{item.name}</span>
+                    <span class="text meaning text-white">{item.meaning}</span>
+                  </div>
+                  <p class="text notes font-serif text-sm line-clamp-3 text-white">{item.notes}</p>
+                {/if}
+              </div>
+            </button>
+          </div>
+        {/each}   
+    
+      {/if}
+    </div>
   </div>
 
   <!-- Footer -->
