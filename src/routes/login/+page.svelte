@@ -59,7 +59,7 @@
             <p class="text-error text-xs italic mt-2">Wrong password</p>
           {/if}
 
-          <div class="mt-2 underline text-gray-700"><button class="link" onclick={() => forgotPassword = true}>Forgot password?</button></div>
+          <div class="mt-2 underline text-gray-700"><button class="link" onclick={() => forgotPassword = true} type="button">Forgot password?</button></div>
 
           <!-- Buttons -->
           <button class="btn btn-neutral mt-4 shadow-none w-full mt-6" disabled={!email || !password}>Login</button>
