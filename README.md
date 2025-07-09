@@ -20,6 +20,7 @@ https://namutree.io/
 ### 4. Ability to sort vocab from newest to oldest, as well as oldest to newest
 
 <img width="220" alt="Screenshot 2025-07-10 at 12 50 27 AM" src="https://github.com/user-attachments/assets/db1e7263-11d3-48ea-b24a-a0a340b76d44" />
+
 (**Random** shows up to twenty random vocabs at a time)
 
 ### 5. Search functionality, which highlights the search items
