@@ -99,6 +99,9 @@
             {@render dropdown_item("Created: Newest first", "newest")}
             {@render dropdown_item("Created: Oldest first", "oldest")}
             {@render dropdown_item("Name", "name")}
+            {#if !searchString}
+              {@render dropdown_item("Random 🔥", "random")}
+            {/if}
           </ul>
         </div>
       </div>

@@ -22,6 +22,13 @@ export const load: PageServerLoad = async ({ locals: { supabase }, url }) => {
 
   // Order
   const sort = url.searchParams.get("sort") || "newest";
+
+  if (sort == "random") {
+    let { data: items } = await supabase.rpc("get_random_items");
+
+    return { items: items ?? [], count, page, sort };
+  }
+
   const sortColumn = ["newest", "oldest"].includes(sort) ? "id" : "name";
   const ascending = sort == "newest" ? false : true;
 

@@ -113,7 +113,7 @@
       {#if searchString && items.length == 0}
         <p class="ml-5 mt-2 text-gray-400 italic">No items found</p>
       {:else}
-        {#if page == "1" && !searchString}
+        {#if page == "1" && !searchString && sort != "random"}
           <!-- Add vocab -->
           <button
             class="card card-dash border-dashed border-1 border-gray-400 min-w-50 h-36 m-1 relative cursor-grab"
@@ -219,25 +219,27 @@
       <p class="text-sm text-base-content/50">Show everything</p>
     </div>
 
-    <!-- Pagination -->
-    <div class="col-start-2 join justify-center justify-self-center">
-      {#if pageCount <= 5}
-        {#each Array.from({ length: pageCount }, (_, i) => i + 1) as i}
-          {#if i == page}
-            <a href={getURL({ folderId: currentFolderId, sort, page: i })}
-              ><button class="join-item btn btn-active">{i}</button></a
-            >
-          {:else}
-            <a href={getURL({ folderId: currentFolderId, sort, page: i })}
-              ><button class="join-item btn">{i}</button></a
-            >
-          {/if}
-        {/each}
-      {/if}
-    </div>
+    {#if sort != "random"}
+      <!-- Pagination -->
+      <div class="col-start-2 join justify-center justify-self-center">
+        {#if pageCount <= 5}
+          {#each Array.from({ length: pageCount }, (_, i) => i + 1) as i}
+            {#if i == page}
+              <a href={getURL({ folderId: currentFolderId, sort, page: i })}
+                ><button class="join-item btn btn-active">{i}</button></a
+              >
+            {:else}
+              <a href={getURL({ folderId: currentFolderId, sort, page: i })}
+                ><button class="join-item btn">{i}</button></a
+              >
+            {/if}
+          {/each}
+        {/if}
+      </div>
+    {/if}
 
-    {#if userState.select}
-      <div class="col-start-3 justify-self-end">
+    <div class="col-start-3 justify-self-end">
+      {#if userState.select}
         <div class="dropdown dropdown-top dropdown-end">
           <div
             tabindex="0"
@@ -266,8 +268,15 @@
         >
           Delete
         </button>
-      </div>
-    {/if}
+      {/if}
+
+      {#if sort == "random"}
+        <button
+          class="btn bg-orange-300 shadow-none justify-center"
+          onclick={() => location.reload()}>Random 🔥</button
+        >
+      {/if}
+    </div>
   </div>
   <!-- End Footer -->
 </div>

@@ -27,6 +27,15 @@ export const load: PageServerLoad = async ({
 
   // Order
   const sort = url.searchParams.get("sort") || "newest";
+
+  if (sort == "random") {
+    let { data: items } = await supabase.rpc("get_random_items_by_folder", {
+      fid: folder_id,
+    });
+
+    return { items, count, page, folder_id, sort };
+  }
+
   const sortColumn = ["newest", "oldest"].includes(sort) ? "id" : "name";
   const ascending = sort == "newest" ? false : true;
 
