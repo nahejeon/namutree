@@ -134,6 +134,13 @@
           disabled={!passwordValid || password != confirmPassword}
           >Continue</button
         >
+        <p class="text-gray-400 text-[11px] italic mt-3 justify-self-center">
+          By signing up, you agree to our <a
+            class="text-emerald-300"
+            href="https://www.freeprivacypolicy.com/live/79009711-146e-4abb-b362-9c1cbc964512"
+            target="blank">Privacy Policy.</a
+          >
+        </p>
       </form>
     </div>
   </div>
