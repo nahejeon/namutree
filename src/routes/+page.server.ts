@@ -1,12 +1,35 @@
 import { redirect } from "@sveltejs/kit";
 
+import { demoFolders, demoItems } from "$lib/demoData"
+
 import type { Actions, PageServerLoad } from "./$types";
 
-export const load: PageServerLoad = async ({ locals: { supabase }, url }) => {
+export const load: PageServerLoad = async ({ locals: { supabase }, url, cookies }) => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
   const user_id = user?.id;
+
+  if (!user && !cookies.get("visited")) {
+    const {
+      data: { user },
+    } = await supabase.auth.signInAnonymously()
+
+    const { data: folders } = await supabase
+      .from("folders")
+      .insert(demoFolders(user.id))
+      .select("*")
+
+    const folderIds = folders.map((f) => f.id)
+
+    await supabase
+      .from("items")
+      .insert(demoItems(user.id, folderIds))
+      .select("*")
+
+  } else if (user && !cookies.get("visited")) {
+    cookies.set("visited", "true", { path: "/" })
+  }
 
   // Get count
   const { count, error } = await supabase

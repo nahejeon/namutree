@@ -1,6 +1,4 @@
-import { redirect } from "@sveltejs/kit";
-
-import type { Actions, PageServerLoad } from "./$types";
+import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({
   locals: { supabase },
@@ -15,7 +13,7 @@ export const load: PageServerLoad = async ({
   const user_id = user?.id;
 
   // Get count
-  const { count, error } = await supabase
+  const { count } = await supabase
     .from("items")
     .select("*", { count: "exact", head: true })
     .eq("profile_id", user_id)

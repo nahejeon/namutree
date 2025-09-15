@@ -10,7 +10,7 @@
   import FolderListItem from "./FolderListItem.svelte";
 
   import logo from "$lib/assets/logo-color.png";
-  import { getURL } from "$lib/getURL.ts";
+  import { getURL } from "$lib/getURL";
 
   import AddFolderIcon from "$lib/icons/AddFolderIcon.svelte";
   import CheckIcon from "$lib/icons/CheckIcon.svelte";

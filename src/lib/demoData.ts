@@ -1,4 +1,4 @@
-export const demoFolders = (userId) => {
+export const demoFolders = (userId: string) => {
   return [
     { name: "한국어", profile_id: userId },
     { name: "日本語", profile_id: userId },
@@ -6,7 +6,7 @@ export const demoFolders = (userId) => {
   ];
 };
 
-export const demoItems = (userId, folderIds) => {
+export const demoItems = (userId: string, folderIds: string[]) => {
   return [
     {
       name: "die Tanne",
