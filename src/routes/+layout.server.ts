@@ -33,7 +33,7 @@ export const load: LayoutServerLoad = async ({
       .insert(demoItems(user.id, folderIds))
       .select("*");
 
-    location.reload();
+    window.location.reload();
   } else if (user && !cookies.get("visited")) {
     cookies.set("visited", "true", { path: "/" });
   }
