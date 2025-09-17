@@ -3,6 +3,7 @@ import { redirect } from "@sveltejs/kit";
 import { demoFolders, demoItems } from "$lib/demoData"
 
 import type { Actions, PageServerLoad } from "./$types";
+import { invalidateAll } from "$app/navigation";
 
 export const load: PageServerLoad = async ({ locals: { supabase }, url, cookies }) => {
   const {
@@ -26,6 +27,8 @@ export const load: PageServerLoad = async ({ locals: { supabase }, url, cookies 
       .from("items")
       .insert(demoItems(user.id, folderIds))
       .select("*")
+
+    invalidateAll()
 
   } else if (user && !cookies.get("visited")) {
     cookies.set("visited", "true", { path: "/" })
@@ -61,6 +64,8 @@ export const load: PageServerLoad = async ({ locals: { supabase }, url, cookies 
     .eq("profile_id", user_id)
     .order(sortColumn, { ascending })
     .range(start, end);
+
+  console.log(items)
 
   return { items: items ?? [], count, page, sort };
 };
