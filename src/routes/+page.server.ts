@@ -1,11 +1,15 @@
 import { redirect } from "@sveltejs/kit";
 
-import { demoFolders, demoItems } from "$lib/demoData"
+import { demoFolders, demoItems } from "$lib/demoData";
 
 import type { Actions, PageServerLoad } from "./$types";
 import { invalidateAll } from "$app/navigation";
 
-export const load: PageServerLoad = async ({ locals: { supabase }, url, cookies }) => {
+export const load: PageServerLoad = async ({
+  locals: { supabase },
+  url,
+  cookies,
+}) => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -14,24 +18,23 @@ export const load: PageServerLoad = async ({ locals: { supabase }, url, cookies 
   if (!user && !cookies.get("visited")) {
     const {
       data: { user },
-    } = await supabase.auth.signInAnonymously()
+    } = await supabase.auth.signInAnonymously();
 
     const { data: folders } = await supabase
       .from("folders")
       .insert(demoFolders(user.id))
-      .select("*")
+      .select("*");
 
-    const folderIds = folders.map((f) => f.id)
+    const folderIds = folders.map((f) => f.id);
 
     await supabase
       .from("items")
       .insert(demoItems(user.id, folderIds))
-      .select("*")
+      .select("*");
 
-    invalidateAll()
-
+    invalidateAll();
   } else if (user && !cookies.get("visited")) {
-    cookies.set("visited", "true", { path: "/" })
+    cookies.set("visited", "true", { path: "/" });
   }
 
   // Get count
@@ -65,7 +68,7 @@ export const load: PageServerLoad = async ({ locals: { supabase }, url, cookies 
     .order(sortColumn, { ascending })
     .range(start, end);
 
-  console.log(items)
+  console.log(items);
 
   return { items: items ?? [], count, page, sort };
 };

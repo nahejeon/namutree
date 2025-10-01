@@ -104,7 +104,7 @@
           >We created some sample data for you to start with. Any changes will
           be lost if you don't <a class="underline font-bold" href="/signup"
             >sign up</a
-          >.</span
+          >. <i>(If you don't see anything, please refresh).</i></span
         >
       </div>
     {/if}

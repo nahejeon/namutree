@@ -1,6 +1,4 @@
-import { redirect } from "@sveltejs/kit";
-
-import type { Actions, PageServerLoad } from "./$types";
+import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ locals: { supabase }, url }) => {
   const searchString = url.searchParams.get("q");
@@ -11,14 +9,14 @@ export const load: PageServerLoad = async ({ locals: { supabase }, url }) => {
   const user_id = user?.id;
 
   // Get count
-  const { count, error } = await supabase
+  const { count } = await supabase
     .from("items")
     .select("*", { count: "exact", head: true })
     .eq("profile_id", user_id)
     .ilike("all_text", `%${searchString}%`);
 
   // Pagination
-  const page = url.searchParams.get("page") || "1";
+  const page = parseInt(url.searchParams.get("page")) && 1;
 
   const start = 20 * (page - 1);
   const end = 20 * page - 1;

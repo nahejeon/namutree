@@ -1,7 +1,7 @@
-import type { LayoutServerLoad } from "./$types"
-import { error } from '@sveltejs/kit'
+import type { LayoutServerLoad } from "./$types";
+import { error } from "@sveltejs/kit";
 
-import { demoFolders, demoItems } from "$lib/demoData"
+import { demoFolders, demoItems } from "$lib/demoData";
 
 export const load: LayoutServerLoad = async ({
   locals: { supabase, safeGetSession },
@@ -10,20 +10,18 @@ export const load: LayoutServerLoad = async ({
   params,
   url,
 }) => {
-  depends("folders:all")
+  depends("folders:all");
 
   const {
     data: { user },
-  } = await supabase.auth.getUser()
+  } = await supabase.auth.getUser();
 
-
-
-  const { session } = await safeGetSession()
+  const { session } = await safeGetSession();
 
   // Order
-  const sort = url.searchParams.get("sort") || "newest"
+  const sort = url.searchParams.get("sort") || "newest";
 
-  const searchString = url.searchParams.get("q")
+  const searchString = url.searchParams.get("q");
 
   return {
     session,
@@ -31,5 +29,5 @@ export const load: LayoutServerLoad = async ({
     folder_id: params.folder_id ?? "",
     sort,
     searchString,
-  }
+  };
 };
