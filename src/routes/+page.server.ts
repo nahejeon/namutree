@@ -20,25 +20,27 @@ export const load: PageServerLoad = async ({
       data: { user },
     } = await supabase.auth.signInAnonymously();
 
-    const { data: folders } = await supabase
-      .from("folders")
-      .insert(demoFolders(user.id))
-      .select("*");
+    if (user) {
+      const { data: folders } = await supabase
+        .from("folders")
+        .insert(demoFolders(user.id))
+        .select("*");
 
-    const folderIds = folders.map((f) => f.id);
+      const folderIds = folders?.map((f) => f.id) ?? [];
 
-    await supabase
-      .from("items")
-      .insert(demoItems(user.id, folderIds))
-      .select("*");
+      await supabase
+        .from("items")
+        .insert(demoItems(user.id, folderIds))
+        .select("*");
 
-    invalidateAll();
+      invalidateAll();
+    }
   } else if (user && !cookies.get("visited")) {
     cookies.set("visited", "true", { path: "/" });
   }
 
   // Get count
-  const { count, error } = await supabase
+  const { count } = await supabase
     .from("items")
     .select("*", { count: "exact", head: true })
     .eq("profile_id", user_id);
@@ -46,8 +48,8 @@ export const load: PageServerLoad = async ({
   // Pagination
   const page = url.searchParams.get("page") || "1";
 
-  const start = page == "1" ? 0 : 20 * (page - 1) - 1;
-  const end = page == "1" ? 18 : 20 * page - 2;
+  const start = page == "1" ? 0 : 20 * (parseInt(page) - 1) - 1;
+  const end = page == "1" ? 18 : 20 * parseInt(page) - 2;
 
   // Order
   const sort = url.searchParams.get("sort") || "newest";
