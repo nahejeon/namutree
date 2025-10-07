@@ -3,7 +3,14 @@ import { redirect } from "@sveltejs/kit";
 import { demoFolders, demoItems } from "$lib/demoData";
 
 import type { Actions, PageServerLoad } from "./$types";
-import { invalidateAll } from "$app/navigation";
+
+type Item = {
+  name: string;
+  meaning: string;
+  notes: string;
+  folder_id: number;
+  profile_id: number;
+};
 
 export const load: PageServerLoad = async ({
   locals: { supabase },
@@ -14,6 +21,8 @@ export const load: PageServerLoad = async ({
     data: { user },
   } = await supabase.auth.getUser();
   const user_id = user?.id;
+
+  let demoLoad: Item[] | null = []
 
   if (!user && !cookies.get("visited")) {
     const {
@@ -28,12 +37,12 @@ export const load: PageServerLoad = async ({
 
       const folderIds = folders?.map((f) => f.id) ?? [];
 
-      await supabase
+      const { data: demoItemsData } = await supabase
         .from("items")
         .insert(demoItems(user.id, folderIds))
         .select("*");
 
-      invalidateAll();
+      demoLoad = demoItemsData
     }
   } else if (user && !cookies.get("visited")) {
     cookies.set("visited", "true", { path: "/" });
@@ -70,9 +79,7 @@ export const load: PageServerLoad = async ({
     .order(sortColumn, { ascending })
     .range(start, end);
 
-  console.log(items);
-
-  return { items: items ?? [], count, page, sort };
+  return { items: items ?? demoLoad ?? [], count, page, sort };
 };
 
 export const actions = {
